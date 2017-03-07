@@ -101,7 +101,6 @@ public class HeartSimInterface extends JFrame {
 				bradyFlag= false;
 				tachyFlag=false;
 				activityFlag=false;
-				System.out.println(normalFlag);
 				
 				
 			}
@@ -123,7 +122,6 @@ public class HeartSimInterface extends JFrame {
 				normalFlag=false;
 				tachyFlag=false;
 				activityFlag=false;
-				System.out.println("brad");
 			}
 		});		
 				
@@ -141,8 +139,6 @@ public class HeartSimInterface extends JFrame {
 				activityFlag=false;
 				normalFlag=false;
 				tachyFlag=true;
-				
-				System.out.println("tach");
 			}
 		});
 		btnTachycardiaHeartRate.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -159,7 +155,6 @@ public class HeartSimInterface extends JFrame {
 				normalFlag=false;
 				tachyFlag=false;
 				activityFlag=true;
-				System.out.println("tach");
 				
 			}
 		});
@@ -202,7 +197,7 @@ public class HeartSimInterface extends JFrame {
 		int i=1;
 		while(i>0){
 		if(normalFlag ){
-			 while (normalFlag && !bradyFlag /*&& !tachyFlag*/) {
+			 while (normalFlag && !bradyFlag && !tachyFlag && !activityFlag) {
 		            try {
 		            	System.out.println("in");
 		                panelNormal.continousDraw();
@@ -217,7 +212,7 @@ public class HeartSimInterface extends JFrame {
 		}
 		 if(bradyFlag){
 				System.out.println("b");
-				 while (!normalFlag && bradyFlag /*&& !tachyFlag*/) {
+				 while (!normalFlag && bradyFlag && !tachyFlag &&  !activityFlag) {
 			            try {
 			            	//System.out.println("in");
 			                bradyPanel.continousDraw();
@@ -228,7 +223,7 @@ public class HeartSimInterface extends JFrame {
 			}
 		 if(tachyFlag){
 			 System.out.println("tf");
-			 while (!normalFlag && !bradyFlag && tachyFlag) {
+			 while (!normalFlag && !bradyFlag && tachyFlag && !activityFlag) {
 		            try {
 		            	//System.out.println("in");
 		                tachyPanel.continousDraw();

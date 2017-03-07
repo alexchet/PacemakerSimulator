@@ -34,20 +34,20 @@ public class HeartSimInterface extends JFrame {
 	TachyPanel tachyPanel = new TachyPanel(); 
 	ActivityPanel activityPanel = new ActivityPanel();
 	
-    ArrayList<Point> normalRatesList = new ArrayList<Point>();
-    ArrayList<Point> bradyRatesList = new ArrayList<Point>();
-    ArrayList<Point> tachyRatesList = new ArrayList<Point>();
-    ArrayList<Point> activityRatesList = new ArrayList<Point>();
+    ArrayList<Point> normalRatesList;
+	ArrayList<Point> tachyRatesList;
+    ArrayList<Point> bradyRatesList;
+    ArrayList<Point> activityRatesList;
     
     boolean normalFlag=false;
     boolean bradyFlag = false;
     boolean tachyFlag = false;
     boolean activityFlag = false;
 
-    NormalData normal;
-    BradyData brady;
-    TachyData tachy;
-    ActiData acti;
+    HeartRate normal;
+    HeartRate brady;
+    HeartRate tachy;
+    HeartRate acti;
     
 	ArrayList al = new ArrayList();
 	private JPanel contentPane;
@@ -58,18 +58,6 @@ public class HeartSimInterface extends JFrame {
 	 */
 	public static void main(String[] args) {
 		new HeartSimInterface();
-		/*EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					HeartSimInterface frame = new HeartSimInterface();
-					frame.setVisible(true);
-					//frame.add(new myView());
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});*/
 	}
 
 	/**
@@ -81,11 +69,18 @@ public class HeartSimInterface extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+
+		normal = new HeartRate(RatePoints.getNormalRates());
+		normalRatesList = normal.getRatesList();
 		
-		normal = new NormalData(normalRatesList);
-		brady = new BradyData(bradyRatesList);
-		tachy = new TachyData(tachyRatesList);
-		acti = new ActiData(activityRatesList);
+		brady = new HeartRate(RatePoints.getBrachycardicRates());
+		bradyRatesList = brady.getRatesList();
+		
+		tachy = new HeartRate(RatePoints.getTachycardicRates());
+		tachyRatesList = tachy.getRatesList();
+		
+		acti = new HeartRate(RatePoints.getRunningActivityRates());
+		activityRatesList = tachy.getRatesList();
 		
 		//getContentPane().add(panelNormal);
 		//getContentPane().add(bradyPanel);
@@ -106,7 +101,6 @@ public class HeartSimInterface extends JFrame {
 				bradyFlag= false;
 				tachyFlag=false;
 				activityFlag=false;
-				System.out.println(normalFlag);
 				
 				
 			}
@@ -128,7 +122,6 @@ public class HeartSimInterface extends JFrame {
 				normalFlag=false;
 				tachyFlag=false;
 				activityFlag=false;
-				System.out.println("brad");
 			}
 		});		
 				
@@ -146,8 +139,6 @@ public class HeartSimInterface extends JFrame {
 				activityFlag=false;
 				normalFlag=false;
 				tachyFlag=true;
-				
-				System.out.println("tach");
 			}
 		});
 		btnTachycardiaHeartRate.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -164,7 +155,6 @@ public class HeartSimInterface extends JFrame {
 				normalFlag=false;
 				tachyFlag=false;
 				activityFlag=true;
-				System.out.println("tach");
 				
 			}
 		});
@@ -207,7 +197,7 @@ public class HeartSimInterface extends JFrame {
 		int i=1;
 		while(i>0){
 		if(normalFlag ){
-			 while (normalFlag && !bradyFlag /*&& !tachyFlag*/) {
+			 while (normalFlag && !bradyFlag && !tachyFlag && !activityFlag) {
 		            try {
 		            	System.out.println("in");
 		                panelNormal.continousDraw();
@@ -222,7 +212,7 @@ public class HeartSimInterface extends JFrame {
 		}
 		 if(bradyFlag){
 				System.out.println("b");
-				 while (!normalFlag && bradyFlag /*&& !tachyFlag*/) {
+				 while (!normalFlag && bradyFlag && !tachyFlag &&  !activityFlag) {
 			            try {
 			            	//System.out.println("in");
 			                bradyPanel.continousDraw();
@@ -233,7 +223,7 @@ public class HeartSimInterface extends JFrame {
 			}
 		 if(tachyFlag){
 			 System.out.println("tf");
-			 while (!normalFlag && !bradyFlag && tachyFlag) {
+			 while (!normalFlag && !bradyFlag && tachyFlag && !activityFlag) {
 		            try {
 		            	//System.out.println("in");
 		                tachyPanel.continousDraw();
@@ -270,8 +260,7 @@ public class HeartSimInterface extends JFrame {
             graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             graph.setColor(Color.white);
             graph.fillRect(0,0,900,300);
-            JButton btnJoinGame = new JButton("Join game"); 
-			add(btnJoinGame);
+           
         }
 
         /**
@@ -310,32 +299,6 @@ public class HeartSimInterface extends JFrame {
         }
 
     }
-	
-	 private  class NormalData extends Thread{
-	        ArrayList points;
-	        int normalRates[] = {10,40,10,90,10,10};
-	        public NormalData(ArrayList p){
-	            points=p;
-	            this.start();
-	        }
-	    public void run()
-	    {
-
-	        while (true)
-	        {
-	            while (normalRatesList.size() < 500)
-	            {
-
-
-	                for(int i=0; i<normalRates.length; i++){
-	                    int p = normalRates[i];
-	                    points.add(new Point(0,50-p));
-	                }
-	            }
-	        }
-
-	    }
-	    }
 	 
 		public class BradyPanel extends JPanel{
 	        Graphics2D graph;
@@ -349,8 +312,7 @@ public class HeartSimInterface extends JFrame {
 	            graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	            graph.setColor(Color.white);
 	            graph.fillRect(0,0,900,300);
-	            JButton btnJoinGame = new JButton("Brady"); 
-				add(btnJoinGame);
+	            
 	        }
 
 	        /**
@@ -389,34 +351,7 @@ public class HeartSimInterface extends JFrame {
 	        }
 
 	    }
-		
-		private  class BradyData extends Thread{
-	        ArrayList points;
-	        int bradyRates[] = {10,40,10,90,10,10,10,10};
-	        public BradyData(ArrayList p){
-	            points=p;
-	            this.start();
-	        }
-	    public void run()
-	    {
-
-	        while (true)
-	        {
-	            while (bradyRatesList.size() < 500)
-	            {
-
-
-	                for(int i=0; i<bradyRates.length; i++){
-	                    int p = bradyRates[i];
-	                    points.add(new Point(0,50-p));
-	                }
-	            }
-	        }
-
-	    }
-	    }
-		
-		
+				
 		/*Tachycardia */
 
 		public class TachyPanel extends JPanel{
@@ -431,8 +366,6 @@ public class HeartSimInterface extends JFrame {
 	            graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	            graph.setColor(Color.white);
 	            graph.fillRect(0,0,900,300);
-	            JButton btnJoinGame = new JButton("Tachy"); 
-				add(btnJoinGame);
 	        }
 
 	        /**
@@ -470,34 +403,7 @@ public class HeartSimInterface extends JFrame {
 	            g.drawImage(bufferedImage,0,0,null);
 	        }
 
-	    }
-		
-		private  class TachyData extends Thread{
-	        ArrayList points;
-	        int tachyRates[] = {10,40,10,90,10};
-	        public TachyData(ArrayList p){
-	            points=p;
-	            this.start();
-	        }
-	    public void run()
-	    {
-
-	        while (true)
-	        {
-	            while (tachyRatesList.size() < 500)
-	            {
-
-
-	                for(int i=0; i<tachyRates.length; i++){
-	                    int p = tachyRates[i];
-	                    points.add(new Point(0,50-p));
-	                }
-	            }
-	        }
-
-	    }
-	    }
-		
+	    }		
 		
 		public class ActivityPanel extends JPanel{
 	        Graphics2D graph;
@@ -511,8 +417,7 @@ public class HeartSimInterface extends JFrame {
 	            graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	            graph.setColor(Color.white);
 	            graph.fillRect(0,0,900,300);
-	            JButton btnJoinGame = new JButton("Tachy"); 
-				add(btnJoinGame);
+	           
 	        }
 
 	        /**
@@ -551,33 +456,6 @@ public class HeartSimInterface extends JFrame {
 	        }
 
 	    }
-		
-		
-		private  class ActiData extends Thread{
-	        ArrayList points;
-	        int actiRates[] = {10,40,10,90,10,10,10};
-	        public ActiData(ArrayList p){
-	            points=p;
-	            this.start();
-	        }
-	    public void run()
-	    {
-
-	        while (true)
-	        {
-	            while (activityRatesList.size() < 500)
-	            {
-	                for(int i=0; i<actiRates.length; i++){
-	                    int p = actiRates[i];
-	                    points.add(new Point(0,50-p));
-	                }
-	            }
-	        }
-
-	    }
-	    }
-		
-		
 }
 	
 	

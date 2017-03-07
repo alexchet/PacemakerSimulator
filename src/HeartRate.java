@@ -2,11 +2,11 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 public class HeartRate extends Thread {
-	ArrayList points;
     ArrayList<Point> ratesList = new ArrayList<Point>();
+    int[] rates;
 	
-    public HeartRate(ArrayList p){
-        points=p;
+    public HeartRate(int[] _rates){
+        rates = _rates;
         this.start();
     }
     
@@ -18,7 +18,7 @@ public class HeartRate extends Thread {
 	        {
 	            for(int i=0; i<rates.length; i++){
 	                int p = rates[i];
-	                points.add(new Point(0,50-p));
+	                ratesList.add(new Point(0,50-p));
 	            }
 	        }
 	    }

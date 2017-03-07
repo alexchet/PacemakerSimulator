@@ -32,6 +32,8 @@ public class HeartSimInterface extends JFrame {
 	Panel panelNormal = new Panel();
 	BradyPanel bradyPanel = new BradyPanel();
 	TachyPanel tachyPanel = new TachyPanel(); 
+	ActivityPanel activityPanel = new ActivityPanel();
+	
     ArrayList<Point> normalRatesList = new ArrayList<Point>();
     ArrayList<Point> bradyRatesList = new ArrayList<Point>();
     ArrayList<Point> tachyRatesList = new ArrayList<Point>();
@@ -44,6 +46,8 @@ public class HeartSimInterface extends JFrame {
 
     NormalData normal;
     BradyData brady;
+    TachyData tachy;
+    ActiData acti;
     
 	ArrayList al = new ArrayList();
 	private JPanel contentPane;
@@ -80,6 +84,8 @@ public class HeartSimInterface extends JFrame {
 		
 		normal = new NormalData(normalRatesList);
 		brady = new BradyData(bradyRatesList);
+		tachy = new TachyData(tachyRatesList);
+		acti = new ActiData(activityRatesList);
 		
 		//getContentPane().add(panelNormal);
 		//getContentPane().add(bradyPanel);
@@ -90,12 +96,19 @@ public class HeartSimInterface extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				getContentPane().remove(bradyPanel);
+				getContentPane().remove(panelNormal);
+				getContentPane().remove(tachyPanel);
+				getContentPane().remove(activityPanel);
+				
 				getContentPane().add(panelNormal);
+				
 				normalFlag = true;
-				System.out.println(normalFlag);
 				bradyFlag= false;
 				tachyFlag=false;
-				//return;
+				activityFlag=false;
+				System.out.println(normalFlag);
+				
+				
 			}
 		});
 		btnNormalRate.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -105,11 +118,17 @@ public class HeartSimInterface extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				getContentPane().remove(panelNormal);
+				getContentPane().remove(bradyPanel);
+				getContentPane().remove(tachyPanel);
+				getContentPane().remove(activityPanel);
+				
+				
 				getContentPane().add(bradyPanel);				
-				bradyFlag= true;
-				System.out.println("brad");
+				bradyFlag= true;				
 				normalFlag=false;
 				tachyFlag=false;
+				activityFlag=false;
+				System.out.println("brad");
 			}
 		});		
 				
@@ -117,6 +136,18 @@ public class HeartSimInterface extends JFrame {
 		JButton btnTachycardiaHeartRate = new JButton("Tachycardia Heart Rate");
 		btnTachycardiaHeartRate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				getContentPane().remove(panelNormal);
+				getContentPane().remove(bradyPanel);
+				getContentPane().remove(tachyPanel);
+				getContentPane().remove(activityPanel);
+				
+				getContentPane().add(tachyPanel);
+				bradyFlag= false;
+				activityFlag=false;
+				normalFlag=false;
+				tachyFlag=true;
+				
+				System.out.println("tach");
 			}
 		});
 		btnTachycardiaHeartRate.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -124,6 +155,17 @@ public class HeartSimInterface extends JFrame {
 		JButton btnRunningactivity = new JButton("Running Activity");
 		btnRunningactivity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				getContentPane().remove(panelNormal);
+				getContentPane().remove(bradyPanel);
+				getContentPane().remove(tachyPanel);
+				getContentPane().remove(activityPanel);
+				getContentPane().add(activityPanel);
+				bradyFlag= false;
+				normalFlag=false;
+				tachyFlag=false;
+				activityFlag=true;
+				System.out.println("tach");
+				
 			}
 		});
 		btnRunningactivity.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -165,8 +207,7 @@ public class HeartSimInterface extends JFrame {
 		int i=1;
 		while(i>0){
 		if(normalFlag ){
-
-			 while (normalFlag && !bradyFlag) {
+			 while (normalFlag && !bradyFlag /*&& !tachyFlag*/) {
 		            try {
 		            	System.out.println("in");
 		                panelNormal.continousDraw();
@@ -180,8 +221,8 @@ public class HeartSimInterface extends JFrame {
 
 		}
 		 if(bradyFlag){
-				System.out.println("ji");
-				 while (!normalFlag && bradyFlag) {
+				System.out.println("b");
+				 while (!normalFlag && bradyFlag /*&& !tachyFlag*/) {
 			            try {
 			            	//System.out.println("in");
 			                bradyPanel.continousDraw();
@@ -190,16 +231,31 @@ public class HeartSimInterface extends JFrame {
 			            } catch (InterruptedException e) {}
 			        }
 			}
+		 if(tachyFlag){
+			 System.out.println("tf");
+			 while (!normalFlag && !bradyFlag && tachyFlag) {
+		            try {
+		            	//System.out.println("in");
+		                tachyPanel.continousDraw();
+		                repaint();
+		                Thread.sleep(200);
+		            } catch (InterruptedException e) {}
+		        }
+		 }
+		 
+		 if(activityFlag){
+			 System.out.println("af");
+			 while (!normalFlag && !bradyFlag && !tachyFlag && activityFlag) {
+		            try {
+		                activityPanel.continousDraw();
+		                repaint();
+		                Thread.sleep(200);
+		            } catch (InterruptedException e) {}
+		        }
+		 }
+		
 		}
-	//}
-		 /*while (true) {
-	            try {
-	                panelNormal.continousDraw();
-	                repaint();
-	                Thread.sleep(200);
-	            } catch (InterruptedException e) {}
-	        }
-*/
+
 	}
 	
 	public class Panel extends JPanel{
@@ -405,7 +461,7 @@ public class HeartSimInterface extends JFrame {
 	                point1=tachyRatesList.get(0);
 	                point2 =tachyRatesList.get(1);
 	                graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
-	                bradyRatesList.remove(0);
+	                tachyRatesList.remove(0);
 	            }
 	        }
 
@@ -441,6 +497,87 @@ public class HeartSimInterface extends JFrame {
 
 	    }
 	    }
+		
+		
+		public class ActivityPanel extends JPanel{
+	        Graphics2D graph;
+	        BufferedImage bufferedImage;
+	        int spaceBetweenpoints = 20;
+
+	        public ActivityPanel(){
+	            setBounds(10,10,600,300);
+	            bufferedImage = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+	            graph = bufferedImage.createGraphics();
+	            graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	            graph.setColor(Color.white);
+	            graph.fillRect(0,0,900,300);
+	            JButton btnJoinGame = new JButton("Tachy"); 
+				add(btnJoinGame);
+	        }
+
+	        /**
+	         * This method stops the graph from drawing the same point again when trying to print a new point
+	         * in other words it keeps the graph tidy
+	         * @param x
+	         * @param width
+	         */
+	        public void deletePoints(int x,int width){
+	            graph.setColor(Color.white);
+	            graph.fillRect(x,0,width,getHeight());
+	        }
+
+	        /**
+	         * Method which "loops" the graph"
+	         */
+	        public void continousDraw(){
+	            //Checks if i passed two points before doing anything, it draws the image
+	            //the image in this case is the rectangle
+	            if(activityRatesList.size()>=2){
+	                graph.drawImage(bufferedImage,0,0, getWidth()-spaceBetweenpoints,getHeight(),spaceBetweenpoints,0,getWidth(),getHeight(),null);
+	                deletePoints(getWidth()-spaceBetweenpoints,spaceBetweenpoints);
+	                graph.setColor(Color.BLACK);
+	                Point point1;
+	                Point point2;
+	                point1=activityRatesList.get(0);
+	                point2 =activityRatesList.get(1);
+	                graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
+	                activityRatesList.remove(0);
+	            }
+	        }
+
+	        public void paint(Graphics g)
+	        {
+	            g.drawImage(bufferedImage,0,0,null);
+	        }
+
+	    }
+		
+		
+		private  class ActiData extends Thread{
+	        ArrayList points;
+	        int actiRates[] = {10,40,10,90,10,10,10};
+	        public ActiData(ArrayList p){
+	            points=p;
+	            this.start();
+	        }
+	    public void run()
+	    {
+
+	        while (true)
+	        {
+	            while (activityRatesList.size() < 500)
+	            {
+	                for(int i=0; i<actiRates.length; i++){
+	                    int p = actiRates[i];
+	                    points.add(new Point(0,50-p));
+	                }
+	            }
+	        }
+
+	    }
+	    }
+		
+		
 }
 	
 	

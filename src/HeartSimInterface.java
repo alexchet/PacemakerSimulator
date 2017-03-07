@@ -31,12 +31,16 @@ import java.awt.event.MouseEvent;
 public class HeartSimInterface extends JFrame {
 	Panel panelNormal = new Panel();
 	BradyPanel bradyPanel = new BradyPanel();
+	TachyPanel tachyPanel = new TachyPanel(); 
     ArrayList<Point> normalRatesList = new ArrayList<Point>();
     ArrayList<Point> bradyRatesList = new ArrayList<Point>();
     ArrayList<Point> tachyRatesList = new ArrayList<Point>();
     ArrayList<Point> activityRatesList = new ArrayList<Point>();
+    
     boolean normalFlag=false;
     boolean bradyFlag = false;
+    boolean tachyFlag = false;
+    boolean activityFlag = false;
 
     NormalData normal;
     BradyData brady;
@@ -90,6 +94,7 @@ public class HeartSimInterface extends JFrame {
 				normalFlag = true;
 				System.out.println(normalFlag);
 				bradyFlag= false;
+				tachyFlag=false;
 				//return;
 			}
 		});
@@ -100,16 +105,20 @@ public class HeartSimInterface extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				getContentPane().remove(panelNormal);
-				getContentPane().add(bradyPanel);
-				
+				getContentPane().add(bradyPanel);				
 				bradyFlag= true;
 				System.out.println("brad");
 				normalFlag=false;
+				tachyFlag=false;
+			}
+		});		
+				
+
+		JButton btnTachycardiaHeartRate = new JButton("Tachycardia Heart Rate");
+		btnTachycardiaHeartRate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnBradyRate.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		
-		JButton btnTachycardiaHeartRate = new JButton("Tachycardia Heart Rate");
 		btnTachycardiaHeartRate.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
 		JButton btnRunningactivity = new JButton("Running Activity");
@@ -147,7 +156,6 @@ public class HeartSimInterface extends JFrame {
 					.addComponent(btnRunningactivity, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
-		
 		contentPane.setLayout(gl_contentPane);
 		setVisible(true);
 		
@@ -249,7 +257,7 @@ public class HeartSimInterface extends JFrame {
 	
 	 private  class NormalData extends Thread{
 	        ArrayList points;
-	        int normalRates[] = {10,40,10,90,10};
+	        int normalRates[] = {10,40,10,90,10,10};
 	        public NormalData(ArrayList p){
 	            points=p;
 	            this.start();
@@ -328,7 +336,7 @@ public class HeartSimInterface extends JFrame {
 		
 		private  class BradyData extends Thread{
 	        ArrayList points;
-	        int bradyRates[] = {10,40,10,90,10,10,10};
+	        int bradyRates[] = {10,40,10,90,10,10,10,10};
 	        public BradyData(ArrayList p){
 	            points=p;
 	            this.start();
@@ -344,6 +352,88 @@ public class HeartSimInterface extends JFrame {
 
 	                for(int i=0; i<bradyRates.length; i++){
 	                    int p = bradyRates[i];
+	                    points.add(new Point(0,50-p));
+	                }
+	            }
+	        }
+
+	    }
+	    }
+		
+		
+		/*Tachycardia */
+
+		public class TachyPanel extends JPanel{
+	        Graphics2D graph;
+	        BufferedImage bufferedImage;
+	        int spaceBetweenpoints = 20;
+
+	        public TachyPanel(){
+	            setBounds(10,10,600,300);
+	            bufferedImage = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+	            graph = bufferedImage.createGraphics();
+	            graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	            graph.setColor(Color.white);
+	            graph.fillRect(0,0,900,300);
+	            JButton btnJoinGame = new JButton("Tachy"); 
+				add(btnJoinGame);
+	        }
+
+	        /**
+	         * This method stops the graph from drawing the same point again when trying to print a new point
+	         * in other words it keeps the graph tidy
+	         * @param x
+	         * @param width
+	         */
+	        public void deletePoints(int x,int width){
+	            graph.setColor(Color.white);
+	            graph.fillRect(x,0,width,getHeight());
+	        }
+
+	        /**
+	         * Method which "loops" the graph"
+	         */
+	        public void continousDraw(){
+	            //Checks if i passed two points before doing anything, it draws the image
+	            //the image in this case is the rectangle
+	            if(tachyRatesList.size()>=2){
+	                graph.drawImage(bufferedImage,0,0, getWidth()-spaceBetweenpoints,getHeight(),spaceBetweenpoints,0,getWidth(),getHeight(),null);
+	                deletePoints(getWidth()-spaceBetweenpoints,spaceBetweenpoints);
+	                graph.setColor(Color.BLACK);
+	                Point point1;
+	                Point point2;
+	                point1=tachyRatesList.get(0);
+	                point2 =tachyRatesList.get(1);
+	                graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
+	                bradyRatesList.remove(0);
+	            }
+	        }
+
+	        public void paint(Graphics g)
+	        {
+	            g.drawImage(bufferedImage,0,0,null);
+	        }
+
+	    }
+		
+		private  class TachyData extends Thread{
+	        ArrayList points;
+	        int tachyRates[] = {10,40,10,90,10};
+	        public TachyData(ArrayList p){
+	            points=p;
+	            this.start();
+	        }
+	    public void run()
+	    {
+
+	        while (true)
+	        {
+	            while (tachyRatesList.size() < 500)
+	            {
+
+
+	                for(int i=0; i<tachyRates.length; i++){
+	                    int p = tachyRates[i];
 	                    points.add(new Point(0,50-p));
 	                }
 	            }

@@ -20,16 +20,17 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
 public class HeartSimInterface extends JFrame {
-	Panel panelNormal = new Panel();
-	BradyPanel bradyPanel = new BradyPanel();
-	TachyPanel tachyPanel = new TachyPanel(); 
-	ActivityPanel activityPanel = new ActivityPanel();
+	
+	Panel normalPanel;
+	Panel bradyPanel;
+	Panel tachyPanel;
+	Panel activityPanel;
 	
     ArrayList<Point> normalRatesList;
 	ArrayList<Point> tachyRatesList;
     ArrayList<Point> bradyRatesList;
-    ArrayList<Point> activityRatesList;
-    
+    ArrayList<Point> activityRatesList;  
+         
     boolean normalFlag=false;
     boolean bradyFlag = false;
     boolean tachyFlag = false;
@@ -40,7 +41,6 @@ public class HeartSimInterface extends JFrame {
     HeartRate tachy;
     HeartRate acti;
     
-	ArrayList al = new ArrayList();
 	private JPanel contentPane;
 	
 
@@ -57,10 +57,10 @@ public class HeartSimInterface extends JFrame {
 
     
     public void resetPanels() {
-		getContentPane().remove(bradyPanel);
-		getContentPane().remove(panelNormal);
-		getContentPane().remove(tachyPanel);
-		getContentPane().remove(activityPanel);
+		if (bradyPanel != null) getContentPane().remove(bradyPanel);
+		if (normalPanel != null) getContentPane().remove(normalPanel);
+		if (tachyPanel != null) getContentPane().remove(tachyPanel);
+		if (activityPanel != null) getContentPane().remove(activityPanel);
     }
     
     public void resetFlags() {
@@ -76,28 +76,21 @@ public class HeartSimInterface extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-
-		normal = new HeartRate(RatePoints.getNormalRates());
-		normalRatesList = normal.getRatesList();
-		
-		brady = new HeartRate(RatePoints.getBrachycardicRates());
-		bradyRatesList = brady.getRatesList();
-		
-		tachy = new HeartRate(RatePoints.getTachycardicRates());
-		tachyRatesList = tachy.getRatesList();
-		
-		acti = new HeartRate(RatePoints.getRunningActivityRates());
-		activityRatesList = tachy.getRatesList();
 		
 		JButton btnNormalRate = new JButton("Normal Heart Rate");
 		btnNormalRate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				normal = new HeartRate(RatePoints.getNormalRates());
+				normalRatesList = normal.getRatesList();
+				normalPanel = new Panel(normalRatesList);
+				
 				resetPanels();
 				resetFlags();
+				normalPanel.resetGraph();
 				
 				normalFlag = true;
-				getContentPane().add(panelNormal);
+				getContentPane().add(normalPanel);
 			}
 		});
 		btnNormalRate.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -105,9 +98,15 @@ public class HeartSimInterface extends JFrame {
 		JButton btnBradyRate = new JButton("Bradycardia Heart Rate");
 		btnBradyRate.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {				
+
+				brady = new HeartRate(RatePoints.getBrachycardicRates());
+				bradyRatesList = brady.getRatesList();
+				bradyPanel = new Panel(bradyRatesList);
+				
 				resetPanels();
 				resetFlags();
+				bradyPanel.resetGraph();
 				
 				bradyFlag = true;
 				getContentPane().add(bradyPanel);
@@ -116,9 +115,15 @@ public class HeartSimInterface extends JFrame {
 				
 		JButton btnTachycardiaHeartRate = new JButton("Tachycardia Heart Rate");
 		btnTachycardiaHeartRate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) {	
+				
+				tachy = new HeartRate(RatePoints.getTachycardicRates());
+				tachyRatesList = tachy.getRatesList();
+				tachyPanel = new Panel(tachyRatesList);
+				
 				resetPanels();
 				resetFlags();
+				tachyPanel.resetGraph();
 				
 				tachyFlag = true;
 				getContentPane().add(tachyPanel);
@@ -128,9 +133,15 @@ public class HeartSimInterface extends JFrame {
 		
 		JButton btnRunningactivity = new JButton("Running Activity");
 		btnRunningactivity.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) {				
+				
+				acti = new HeartRate(RatePoints.getRunningActivityRates());
+				activityRatesList = tachy.getRatesList();
+				activityPanel = new Panel(activityRatesList);
+				
 				resetPanels();
 				resetFlags();
+				activityPanel.resetGraph();
 				
 				activityFlag = true;
 				getContentPane().add(activityPanel);
@@ -169,7 +180,7 @@ public class HeartSimInterface extends JFrame {
         try {
 			while (true) {
 				if (normalFlag) {
-		                panelNormal.continousDraw();
+		                normalPanel.continousDraw();
 				}
 
 				if (bradyFlag) {
@@ -190,213 +201,6 @@ public class HeartSimInterface extends JFrame {
         } catch (InterruptedException e) {}
 	}
 	
-	public class Panel extends JPanel{
-        Graphics2D graph;
-        BufferedImage bufferedImage;
-        int spaceBetweenpoints = 20;
-
-        public Panel(){
-            setBounds(10,10,600,300);
-            bufferedImage = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-            graph = bufferedImage.createGraphics();
-            graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            graph.setColor(Color.white);
-            graph.fillRect(0,0,900,300);
-           
-        }
-
-        /**
-         * This method stops the graph from drawing the same point again when trying to print a new point
-         * in other words it keeps the graph tidy
-         * @param x
-         * @param width
-         */
-        public void deletePoints(int x,int width){
-            graph.setColor(Color.white);
-            graph.fillRect(x,0,width,getHeight());
-        }
-
-        /**
-         * Method which "loops" the graph"
-         */
-        public void continousDraw(){
-            //Checks if i passed two points before doing anything, it draws the image
-            //the image in this case is the rectangle
-            if(normalRatesList.size()>=2){
-                graph.drawImage(bufferedImage,0,0, getWidth()-spaceBetweenpoints,getHeight(),spaceBetweenpoints,0,getWidth(),getHeight(),null);
-                deletePoints(getWidth()-spaceBetweenpoints,spaceBetweenpoints);
-                graph.setColor(Color.BLACK);
-                Point point1;
-                Point point2;
-                point1=normalRatesList.get(0);
-                point2 =normalRatesList.get(1);
-                graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
-                normalRatesList.remove(0);
-            }
-        }
-
-        public void paint(Graphics g)
-        {
-            g.drawImage(bufferedImage,0,0,null);
-        }
-
-    }
-	 
-		public class BradyPanel extends JPanel{
-	        Graphics2D graph;
-	        BufferedImage bufferedImage;
-	        int spaceBetweenpoints = 20;
-
-	        public BradyPanel(){
-	            setBounds(10,10,600,300);
-	            bufferedImage = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-	            graph = bufferedImage.createGraphics();
-	            graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-	            graph.setColor(Color.white);
-	            graph.fillRect(0,0,900,300);
-	            
-	        }
-
-	        /**
-	         * This method stops the graph from drawing the same point again when trying to print a new point
-	         * in other words it keeps the graph tidy
-	         * @param x
-	         * @param width
-	         */
-	        public void deletePoints(int x,int width){
-	            graph.setColor(Color.white);
-	            graph.fillRect(x,0,width,getHeight());
-	        }
-
-	        /**
-	         * Method which "loops" the graph"
-	         */
-	        public void continousDraw(){
-	            //Checks if i passed two points before doing anything, it draws the image
-	            //the image in this case is the rectangle
-	            if(bradyRatesList.size()>=2){
-	                graph.drawImage(bufferedImage,0,0, getWidth()-spaceBetweenpoints,getHeight(),spaceBetweenpoints,0,getWidth(),getHeight(),null);
-	                deletePoints(getWidth()-spaceBetweenpoints,spaceBetweenpoints);
-	                graph.setColor(Color.BLACK);
-	                Point point1;
-	                Point point2;
-	                point1=bradyRatesList.get(0);
-	                point2 =bradyRatesList.get(1);
-	                graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
-	                bradyRatesList.remove(0);
-	            }
-	        }
-
-	        public void paint(Graphics g)
-	        {
-	            g.drawImage(bufferedImage,0,0,null);
-	        }
-
-	    }
-				
-		/*Tachycardia */
-
-		public class TachyPanel extends JPanel{
-	        Graphics2D graph;
-	        BufferedImage bufferedImage;
-	        int spaceBetweenpoints = 20;
-
-	        public TachyPanel(){
-	            setBounds(10,10,600,300);
-	            bufferedImage = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-	            graph = bufferedImage.createGraphics();
-	            graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-	            graph.setColor(Color.white);
-	            graph.fillRect(0,0,900,300);
-	        }
-
-	        /**
-	         * This method stops the graph from drawing the same point again when trying to print a new point
-	         * in other words it keeps the graph tidy
-	         * @param x
-	         * @param width
-	         */
-	        public void deletePoints(int x,int width){
-	            graph.setColor(Color.white);
-	            graph.fillRect(x,0,width,getHeight());
-	        }
-
-	        /**
-	         * Method which "loops" the graph"
-	         */
-	        public void continousDraw(){
-	            //Checks if i passed two points before doing anything, it draws the image
-	            //the image in this case is the rectangle
-	            if(tachyRatesList.size()>=2){
-	                graph.drawImage(bufferedImage,0,0, getWidth()-spaceBetweenpoints,getHeight(),spaceBetweenpoints,0,getWidth(),getHeight(),null);
-	                deletePoints(getWidth()-spaceBetweenpoints,spaceBetweenpoints);
-	                graph.setColor(Color.BLACK);
-	                Point point1;
-	                Point point2;
-	                point1=tachyRatesList.get(0);
-	                point2 =tachyRatesList.get(1);
-	                graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
-	                tachyRatesList.remove(0);
-	            }
-	        }
-
-	        public void paint(Graphics g)
-	        {
-	            g.drawImage(bufferedImage,0,0,null);
-	        }
-
-	    }		
-		
-		public class ActivityPanel extends JPanel{
-	        Graphics2D graph;
-	        BufferedImage bufferedImage;
-	        int spaceBetweenpoints = 20;
-
-	        public ActivityPanel(){
-	            setBounds(10,10,600,300);
-	            bufferedImage = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-	            graph = bufferedImage.createGraphics();
-	            graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-	            graph.setColor(Color.white);
-	            graph.fillRect(0,0,900,300);
-	           
-	        }
-
-	        /**
-	         * This method stops the graph from drawing the same point again when trying to print a new point
-	         * in other words it keeps the graph tidy
-	         * @param x
-	         * @param width
-	         */
-	        public void deletePoints(int x,int width){
-	            graph.setColor(Color.white);
-	            graph.fillRect(x,0,width,getHeight());
-	        }
-
-	        /**
-	         * Method which "loops" the graph"
-	         */
-	        public void continousDraw(){
-	            //Checks if i passed two points before doing anything, it draws the image
-	            //the image in this case is the rectangle
-	            if(activityRatesList.size()>=2){
-	                graph.drawImage(bufferedImage,0,0, getWidth()-spaceBetweenpoints,getHeight(),spaceBetweenpoints,0,getWidth(),getHeight(),null);
-	                deletePoints(getWidth()-spaceBetweenpoints,spaceBetweenpoints);
-	                graph.setColor(Color.BLACK);
-	                Point point1;
-	                Point point2;
-	                point1=activityRatesList.get(0);
-	                point2 =activityRatesList.get(1);
-	                graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
-	                activityRatesList.remove(0);
-	            }
-	        }
-
-	        public void paint(Graphics g)
-	        {
-	            g.drawImage(bufferedImage,0,0,null);
-	        }
-	    }
 }
 	
 	

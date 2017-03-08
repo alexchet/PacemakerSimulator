@@ -24,7 +24,7 @@ public class HeartRate extends Thread {
 	    }
 	}
     
-    public ArrayList getRatesList(){
+    public ArrayList<Point> getRatesList(){
     	return this.ratesList;
     }
 }

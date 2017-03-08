@@ -89,10 +89,6 @@ public class HeartSimInterface extends JFrame {
 		acti = new HeartRate(RatePoints.getRunningActivityRates());
 		activityRatesList = tachy.getRatesList();
 		
-		//getContentPane().add(panelNormal);
-		//getContentPane().add(bradyPanel);
-		
-		 
 		JButton btnNormalRate = new JButton("Normal Heart Rate");
 		btnNormalRate.addMouseListener(new MouseAdapter() {
 			@Override
@@ -118,7 +114,6 @@ public class HeartSimInterface extends JFrame {
 			}
 		});		
 				
-
 		JButton btnTachycardiaHeartRate = new JButton("Tachycardia Heart Rate");
 		btnTachycardiaHeartRate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -170,62 +165,29 @@ public class HeartSimInterface extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 		setVisible(true);
-		
-		while(normalFlag==false && bradyFlag==false){
-			System.out.println("bg");
-		}
-		int i=1;
-		while(i>0){
-		if(normalFlag ){
-			 while (normalFlag && !bradyFlag && !tachyFlag && !activityFlag) {
-		            try {
-		            	System.out.println("in");
+
+        try {
+			while (true) {
+				if (normalFlag) {
 		                panelNormal.continousDraw();
-		                repaint();
-		                Thread.sleep(200);
-		            } catch (InterruptedException e) {}
-		        }
-			/* if(bradyFlag){
-			System.out.println("ji");
-		}*/
+				}
 
-		}
-		 if(bradyFlag){
-				System.out.println("b");
-				 while (!normalFlag && bradyFlag && !tachyFlag &&  !activityFlag) {
-			            try {
-			            	//System.out.println("in");
-			                bradyPanel.continousDraw();
-			                repaint();
-			                Thread.sleep(200);
-			            } catch (InterruptedException e) {}
-			        }
-			}
-		 if(tachyFlag){
-			 System.out.println("tf");
-			 while (!normalFlag && !bradyFlag && tachyFlag && !activityFlag) {
-		            try {
-		            	//System.out.println("in");
+				if (bradyFlag) {
+		                bradyPanel.continousDraw();
+				}
+
+				if (tachyFlag) {
 		                tachyPanel.continousDraw();
-		                repaint();
-		                Thread.sleep(200);
-		            } catch (InterruptedException e) {}
-		        }
-		 }
-		 
-		 if(activityFlag){
-			 System.out.println("af");
-			 while (!normalFlag && !bradyFlag && !tachyFlag && activityFlag) {
-		            try {
-		                activityPanel.continousDraw();
-		                repaint();
-		                Thread.sleep(200);
-		            } catch (InterruptedException e) {}
-		        }
-		 }
-		
-		}
+				}
 
+				if (activityFlag) {
+		                activityPanel.continousDraw();
+				}
+	
+	            repaint();
+	            Thread.sleep(200);
+			}
+        } catch (InterruptedException e) {}
 	}
 	
 	public class Panel extends JPanel{
@@ -434,15 +396,6 @@ public class HeartSimInterface extends JFrame {
 	        {
 	            g.drawImage(bufferedImage,0,0,null);
 	        }
-	        
-	        public void resetPanels()
-	        {
-				getContentPane().remove(bradyPanel);
-				getContentPane().remove(panelNormal);
-				getContentPane().remove(tachyPanel);
-				getContentPane().remove(activityPanel);
-	        }
-
 	    }
 }
 	

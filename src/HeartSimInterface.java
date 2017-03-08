@@ -54,6 +54,22 @@ public class HeartSimInterface extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+
+    
+    public void resetPanels() {
+		getContentPane().remove(bradyPanel);
+		getContentPane().remove(panelNormal);
+		getContentPane().remove(tachyPanel);
+		getContentPane().remove(activityPanel);
+    }
+    
+    public void resetFlags() {
+    	normalFlag = false;
+		bradyFlag= false;
+		tachyFlag=false;
+		activityFlag=false;
+    }
+    
 	public HeartSimInterface() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 744, 597);
@@ -81,19 +97,11 @@ public class HeartSimInterface extends JFrame {
 		btnNormalRate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				getContentPane().remove(bradyPanel);
-				getContentPane().remove(panelNormal);
-				getContentPane().remove(tachyPanel);
-				getContentPane().remove(activityPanel);
-				
-				getContentPane().add(panelNormal);
+				resetPanels();
+				resetFlags();
 				
 				normalFlag = true;
-				bradyFlag= false;
-				tachyFlag=false;
-				activityFlag=false;
-				
-				
+				getContentPane().add(panelNormal);
 			}
 		});
 		btnNormalRate.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -102,17 +110,11 @@ public class HeartSimInterface extends JFrame {
 		btnBradyRate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				getContentPane().remove(panelNormal);
-				getContentPane().remove(bradyPanel);
-				getContentPane().remove(tachyPanel);
-				getContentPane().remove(activityPanel);
+				resetPanels();
+				resetFlags();
 				
-				
-				getContentPane().add(bradyPanel);				
-				bradyFlag= true;				
-				normalFlag=false;
-				tachyFlag=false;
-				activityFlag=false;
+				bradyFlag = true;
+				getContentPane().add(bradyPanel);
 			}
 		});		
 				
@@ -120,16 +122,11 @@ public class HeartSimInterface extends JFrame {
 		JButton btnTachycardiaHeartRate = new JButton("Tachycardia Heart Rate");
 		btnTachycardiaHeartRate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getContentPane().remove(panelNormal);
-				getContentPane().remove(bradyPanel);
-				getContentPane().remove(tachyPanel);
-				getContentPane().remove(activityPanel);
+				resetPanels();
+				resetFlags();
 				
+				tachyFlag = true;
 				getContentPane().add(tachyPanel);
-				bradyFlag= false;
-				activityFlag=false;
-				normalFlag=false;
-				tachyFlag=true;
 			}
 		});
 		btnTachycardiaHeartRate.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -137,22 +134,14 @@ public class HeartSimInterface extends JFrame {
 		JButton btnRunningactivity = new JButton("Running Activity");
 		btnRunningactivity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getContentPane().remove(panelNormal);
-				getContentPane().remove(bradyPanel);
-				getContentPane().remove(tachyPanel);
-				getContentPane().remove(activityPanel);
-				getContentPane().add(activityPanel);
-				bradyFlag= false;
-				normalFlag=false;
-				tachyFlag=false;
-				activityFlag=true;
+				resetPanels();
+				resetFlags();
 				
+				activityFlag = true;
+				getContentPane().add(activityPanel);
 			}
 		});
 		btnRunningactivity.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		
-		
-		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -444,6 +433,14 @@ public class HeartSimInterface extends JFrame {
 	        public void paint(Graphics g)
 	        {
 	            g.drawImage(bufferedImage,0,0,null);
+	        }
+	        
+	        public void resetPanels()
+	        {
+				getContentPane().remove(bradyPanel);
+				getContentPane().remove(panelNormal);
+				getContentPane().remove(tachyPanel);
+				getContentPane().remove(activityPanel);
 	        }
 
 	    }

@@ -1,3 +1,7 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.SystemColor;
+
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
@@ -12,6 +16,12 @@ public class Interface extends JFrame{
 	
 	public Interface(){
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBackground(SystemColor.text);
+		tabbedPane.setFont(new Font("Tahoma", Font.BOLD, 15));
+		tabbedPane.setBounds(100, 100, 751, 633);
+		//tabbedPane.setForegroundAt(0, new Color(0, 0, 0));
+		//tabbedPane.setBackgroundAt(0, SystemColor.activeCaption);
+		
 		HeartRate heartRate = new HeartRate();
 
 		new HeartSimulation(tabbedPane, heartRate);

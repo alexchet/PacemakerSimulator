@@ -1,9 +1,13 @@
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +23,7 @@ public class HeartSimulation extends JFrame{
 	Panel bradyPanel;
 	Panel tachyPanel;
 	Panel activityPanel;
+	JPanel initialPanel;
          
     boolean normalFlag=false;
     boolean bradyFlag = false;
@@ -33,9 +38,17 @@ public class HeartSimulation extends JFrame{
 
 	public HeartSimulation(JTabbedPane tabbedPane, HeartRate heartRate) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 744, 597);
+		setBounds(100, 100, 850, 643);
 
 		contentPane = new JPanel();
+		contentPane.setBounds(100, 100, 751, 620);
+		
+		initialPanel = new JPanel();
+		initialPanel.setBounds(5,5,800,300);		
+		initialPanel.setBorder(BorderFactory.createLineBorder(Color.white, 2));
+		initialPanel.setBackground(Color.white);
+				
+		contentPane.add(initialPanel);
 		tabbedPane.addTab("Heart Simulator", contentPane);
 		
 		JButton btnNormalRate = new JButton("Normal Heart Rate");
@@ -54,10 +67,10 @@ public class HeartSimulation extends JFrame{
 				contentPane.add(normalPanel);
 			}
 		});
-		btnNormalRate.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNormalRate.setBackground(SystemColor.inactiveCaptionBorder);
+		btnNormalRate.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		JButton btnBradyRate = new JButton("Bradycardia Heart Rate");
-		btnBradyRate.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnBradyRate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {				
@@ -71,11 +84,10 @@ public class HeartSimulation extends JFrame{
 				
 				bradyFlag = true;
 				contentPane.add(bradyPanel);
-				//mnHeartSimulation.add(contentPane);
-				//contentPane.add(bradyPanel);
-				//mnHeartSimulation.add(bradyPanel);
 			}
 		});
+		btnBradyRate.setBackground(SystemColor.inactiveCaptionBorder);
+		btnBradyRate.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		JButton btnRunningactivity = new JButton("Running Activity");
 		btnRunningactivity.addActionListener(new ActionListener() {
@@ -92,7 +104,8 @@ public class HeartSimulation extends JFrame{
 				contentPane.add(activityPanel);
 			}
 		});
-		btnRunningactivity.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnRunningactivity.setBackground(SystemColor.inactiveCaptionBorder);
+		btnRunningactivity.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		JButton btnTachycardiaHeartRate = new JButton("Tachycardia Heart Rate");
 		btnTachycardiaHeartRate.addActionListener(new ActionListener() {
@@ -109,33 +122,35 @@ public class HeartSimulation extends JFrame{
 				contentPane.add(tachyPanel);
 			}
 		});
-		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 1, 1));
-		btnTachycardiaHeartRate.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnTachycardiaHeartRate.setBackground(SystemColor.inactiveCaptionBorder);
+		btnTachycardiaHeartRate.setFont(new Font("Tahoma", Font.BOLD, 15));
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btnBradyRate, GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
-						.addComponent(btnNormalRate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
-						.addComponent(btnTachycardiaHeartRate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
-						.addComponent(btnRunningactivity, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE))
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addComponent(btnNormalRate, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addComponent(btnBradyRate, GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnTachycardiaHeartRate, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnRunningactivity, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
-				gl_contentPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-						.addContainerGap(330, Short.MAX_VALUE)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(314, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNormalRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(btnBradyRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(btnTachycardiaHeartRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(btnRunningactivity, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap())
-			);
+						.addComponent(btnRunningactivity, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
+					.addGap(180))
+		);
+
 		contentPane.setLayout(gl_contentPane);
 		getContentPane().add(tabbedPane);
 		setVisible(true);
@@ -173,6 +188,7 @@ public class HeartSimulation extends JFrame{
 		if (normalPanel != null) contentPane.remove(normalPanel);
 		if (tachyPanel != null) contentPane.remove(tachyPanel);
 		if (activityPanel != null) contentPane.remove(activityPanel);
+		if (initialPanel != null) contentPane.remove(initialPanel);
     }
     
     public void resetFlags() {

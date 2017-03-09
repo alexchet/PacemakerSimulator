@@ -56,6 +56,7 @@ public class HeartSimulation extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent arg0) {				
 				countHeartBeats = 0;
+				heartRate.reset();
 				heartRate.startHeart(RatePoints.getNormalRates());
 				normalPanel = new Panel(heartRate.getRatesList());
 				
@@ -75,6 +76,7 @@ public class HeartSimulation extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent e) {				
 				countHeartBeats = 0;
+				heartRate.reset();
 				heartRate.startHeart(RatePoints.getBrachycardicRates());
 				bradyPanel = new Panel(heartRate.getRatesList());
 				
@@ -93,6 +95,7 @@ public class HeartSimulation extends JFrame{
 		btnRunningactivity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
 				countHeartBeats = 0;
+				heartRate.reset();
 				heartRate.startHeart(RatePoints.getRunningActivityRates());
 				activityPanel = new Panel(heartRate.getRatesList());
 				
@@ -111,6 +114,7 @@ public class HeartSimulation extends JFrame{
 		btnTachycardiaHeartRate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
 				countHeartBeats = 0;
+				heartRate.reset();
 				heartRate.startHeart(RatePoints.getTachycardicRates());
 				tachyPanel = new Panel(heartRate.getRatesList());
 				

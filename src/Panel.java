@@ -44,7 +44,7 @@ public class Panel extends JPanel{
     public void continousDraw(int c) {
         //Checks if i passed two points before doing anything, it draws the image
         //the image in this case is the rectangle
-        if(panelList.size()>=2) {
+        if(panelList.size() > c + 1) {
             graph.drawImage(bufferedImage,0,0, getWidth()-spaceBetweenpoints,getHeight(),spaceBetweenpoints,0,getWidth(),getHeight(),null);
             deletePoints(getWidth()-spaceBetweenpoints,spaceBetweenpoints);
             graph.setColor(Color.BLACK);

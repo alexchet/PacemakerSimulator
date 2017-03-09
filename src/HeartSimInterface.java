@@ -18,6 +18,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
 
 public class HeartSimInterface extends JFrame {
 	
@@ -73,9 +75,20 @@ public class HeartSimInterface extends JFrame {
 	public HeartSimInterface() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 744, 597);
+		
+		JMenuBar menuBar = new JMenuBar();
+		
+		setJMenuBar(menuBar);
+		
+		JMenu mnHeartSimulation = new JMenu("Heart Simulation");
+		menuBar.add(mnHeartSimulation);
+		
 		contentPane = new JPanel();
+		//contentPane.add(bradyPanel);
+		mnHeartSimulation.add(contentPane);
+		
+		
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		
 		JButton btnNormalRate = new JButton("Normal Heart Rate");
 		btnNormalRate.addMouseListener(new MouseAdapter() {
@@ -109,7 +122,10 @@ public class HeartSimInterface extends JFrame {
 				bradyPanel.resetGraph();
 				
 				bradyFlag = true;
-				getContentPane().add(bradyPanel);
+				contentPane.add(bradyPanel);
+				mnHeartSimulation.add(contentPane);
+				//getContentPane().add(bradyPanel);
+				//mnHeartSimulation.add(bradyPanel);
 			}
 		});		
 				
@@ -200,7 +216,6 @@ public class HeartSimInterface extends JFrame {
 			}
         } catch (InterruptedException e) {}
 	}
-	
 }
 	
 	

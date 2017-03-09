@@ -41,7 +41,7 @@ public class Panel extends JPanel{
         graph.fillRect(0,0,width,300);
     }
     
-    public void continousDraw() {
+    public void continousDraw(int c) {
         //Checks if i passed two points before doing anything, it draws the image
         //the image in this case is the rectangle
         if(panelList.size()>=2) {
@@ -50,10 +50,9 @@ public class Panel extends JPanel{
             graph.setColor(Color.BLACK);
             Point point1;
             Point point2;
-            point1 = panelList.get(0);
-            point2 = panelList.get(1);
+            point1 = panelList.get(c);
+            point2 = panelList.get(c + 1);
             graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
-            panelList.remove(0);
         }
     }
 

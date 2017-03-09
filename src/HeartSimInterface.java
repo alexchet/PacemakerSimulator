@@ -20,8 +20,12 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
+import java.awt.BorderLayout;
+import javax.swing.JTabbedPane;
+import java.awt.FlowLayout;
 
 public class HeartSimInterface extends JFrame {
+	JPanel contentPane;
 	
 	Panel normalPanel;
 	Panel bradyPanel;
@@ -42,8 +46,6 @@ public class HeartSimInterface extends JFrame {
     HeartRate brady;
     HeartRate tachy;
     HeartRate acti;
-    
-	private JPanel contentPane;
 	
 
 	/**
@@ -59,10 +61,10 @@ public class HeartSimInterface extends JFrame {
 
     
     public void resetPanels() {
-		if (bradyPanel != null) getContentPane().remove(bradyPanel);
-		if (normalPanel != null) getContentPane().remove(normalPanel);
-		if (tachyPanel != null) getContentPane().remove(tachyPanel);
-		if (activityPanel != null) getContentPane().remove(activityPanel);
+		if (bradyPanel != null) contentPane.remove(bradyPanel);
+		if (normalPanel != null) contentPane.remove(normalPanel);
+		if (tachyPanel != null) contentPane.remove(tachyPanel);
+		if (activityPanel != null) contentPane.remove(activityPanel);
     }
     
     public void resetFlags() {
@@ -76,19 +78,14 @@ public class HeartSimInterface extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 744, 597);
 		
-		JMenuBar menuBar = new JMenuBar();
-		
-		setJMenuBar(menuBar);
-		
-		JMenu mnHeartSimulation = new JMenu("Heart Simulation");
-		menuBar.add(mnHeartSimulation);
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setSize(getContentPane().getWidth(), getContentPane().getHeight());
+		tabbedPane.setBounds(100, 100, 744, 597);
 		
 		contentPane = new JPanel();
-		//contentPane.add(bradyPanel);
-		mnHeartSimulation.add(contentPane);
-		
-		
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setSize(getContentPane().getWidth(), getContentPane().getHeight());
+		contentPane.setBounds(100, 100, 744, 597);
+		tabbedPane.addTab("Heart Simulator",contentPane);
 		
 		JButton btnNormalRate = new JButton("Normal Heart Rate");
 		btnNormalRate.addMouseListener(new MouseAdapter() {
@@ -103,12 +100,13 @@ public class HeartSimInterface extends JFrame {
 				normalPanel.resetGraph();
 				
 				normalFlag = true;
-				getContentPane().add(normalPanel);
+				contentPane.add(normalPanel);
 			}
 		});
-		btnNormalRate.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnNormalRate.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		JButton btnBradyRate = new JButton("Bradycardia Heart Rate");
+		btnBradyRate.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnBradyRate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {				
@@ -123,29 +121,11 @@ public class HeartSimInterface extends JFrame {
 				
 				bradyFlag = true;
 				contentPane.add(bradyPanel);
-				mnHeartSimulation.add(contentPane);
-				//getContentPane().add(bradyPanel);
+				//mnHeartSimulation.add(contentPane);
+				//contentPane.add(bradyPanel);
 				//mnHeartSimulation.add(bradyPanel);
 			}
-		});		
-				
-		JButton btnTachycardiaHeartRate = new JButton("Tachycardia Heart Rate");
-		btnTachycardiaHeartRate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {	
-				
-				tachy = new HeartRate(RatePoints.getTachycardicRates());
-				tachyRatesList = tachy.getRatesList();
-				tachyPanel = new Panel(tachyRatesList);
-				
-				resetPanels();
-				resetFlags();
-				tachyPanel.resetGraph();
-				
-				tachyFlag = true;
-				getContentPane().add(tachyPanel);
-			}
 		});
-		btnTachycardiaHeartRate.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
 		JButton btnRunningactivity = new JButton("Running Activity");
 		btnRunningactivity.addActionListener(new ActionListener() {
@@ -160,11 +140,29 @@ public class HeartSimInterface extends JFrame {
 				activityPanel.resetGraph();
 				
 				activityFlag = true;
-				getContentPane().add(activityPanel);
+				contentPane.add(activityPanel);
 			}
 		});
-		btnRunningactivity.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnRunningactivity.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
+		JButton btnTachycardiaHeartRate = new JButton("Tachycardia Heart Rate");
+		btnTachycardiaHeartRate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {	
+				
+				tachy = new HeartRate(RatePoints.getTachycardicRates());
+				tachyRatesList = tachy.getRatesList();
+				tachyPanel = new Panel(tachyRatesList);
+				
+				resetPanels();
+				resetFlags();
+				tachyPanel.resetGraph();
+				
+				tachyFlag = true;
+				contentPane.add(tachyPanel);
+			}
+		});
+		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 1, 1));
+		btnTachycardiaHeartRate.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -178,19 +176,21 @@ public class HeartSimInterface extends JFrame {
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap(330, Short.MAX_VALUE)
-					.addComponent(btnNormalRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnBradyRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnTachycardiaHeartRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnRunningactivity, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
+				gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+						.addContainerGap(330, Short.MAX_VALUE)
+						.addComponent(btnNormalRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(btnBradyRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(btnTachycardiaHeartRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(btnRunningactivity, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap())
+			);
 		contentPane.setLayout(gl_contentPane);
+		getContentPane().add(tabbedPane);
+		
 		setVisible(true);
 
         try {

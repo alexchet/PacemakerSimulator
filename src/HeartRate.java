@@ -14,7 +14,7 @@ public class HeartRate extends Thread {
     {
 	    while (true)
 	    {
-	        while (ratesList.size() < 20)
+	        while (ratesList.size() < 200)
 	        {
 	            for(int i=0; i<rates.length; i++){
 	                int p = rates[i];

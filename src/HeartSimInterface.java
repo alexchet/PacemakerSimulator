@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -23,6 +24,8 @@ import javax.swing.JMenu;
 import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;
 import java.awt.FlowLayout;
+import java.awt.SystemColor;
+import javax.swing.JLabel;
 
 public class HeartSimInterface extends JFrame {
 	JPanel contentPane;
@@ -31,6 +34,7 @@ public class HeartSimInterface extends JFrame {
 	Panel bradyPanel;
 	Panel tachyPanel;
 	Panel activityPanel;
+	JPanel initialPanel;
 	
     ArrayList<Point> normalRatesList;
 	ArrayList<Point> tachyRatesList;
@@ -65,6 +69,7 @@ public class HeartSimInterface extends JFrame {
 		if (normalPanel != null) contentPane.remove(normalPanel);
 		if (tachyPanel != null) contentPane.remove(tachyPanel);
 		if (activityPanel != null) contentPane.remove(activityPanel);
+		if (initialPanel != null) contentPane.remove(initialPanel);
     }
     
     public void resetFlags() {
@@ -76,18 +81,32 @@ public class HeartSimInterface extends JFrame {
     
 	public HeartSimInterface() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 744, 597);
+		setBounds(100, 100, 850, 643);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBackground(SystemColor.text);
+		tabbedPane.setFont(new Font("Tahoma", Font.BOLD, 15));
 		tabbedPane.setSize(getContentPane().getWidth(), getContentPane().getHeight());
-		tabbedPane.setBounds(100, 100, 744, 597);
+		tabbedPane.setBounds(100, 100, 751, 633);
+		
 		
 		contentPane = new JPanel();
 		contentPane.setSize(getContentPane().getWidth(), getContentPane().getHeight());
-		contentPane.setBounds(100, 100, 744, 597);
+		contentPane.setBounds(100, 100, 751, 620);
+		
+		initialPanel = new JPanel();
+		initialPanel.setBounds(5,5,800,300);		
+		initialPanel.setBorder(BorderFactory.createLineBorder(Color.white, 2));
+		initialPanel.setBackground(Color.white);
+		
+		contentPane.add(initialPanel);
+		
 		tabbedPane.addTab("Heart Simulator",contentPane);
+		tabbedPane.setForegroundAt(0, new Color(0, 0, 0));
+		tabbedPane.setBackgroundAt(0, SystemColor.activeCaption);
 		
 		JButton btnNormalRate = new JButton("Normal Heart Rate");
+		btnNormalRate.setBackground(SystemColor.inactiveCaptionBorder);
 		btnNormalRate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -103,10 +122,11 @@ public class HeartSimInterface extends JFrame {
 				contentPane.add(normalPanel);
 			}
 		});
-		btnNormalRate.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNormalRate.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		JButton btnBradyRate = new JButton("Bradycardia Heart Rate");
-		btnBradyRate.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnBradyRate.setBackground(SystemColor.inactiveCaptionBorder);
+		btnBradyRate.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnBradyRate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {				
@@ -128,6 +148,7 @@ public class HeartSimInterface extends JFrame {
 		});
 		
 		JButton btnRunningactivity = new JButton("Running Activity");
+		btnRunningactivity.setBackground(SystemColor.inactiveCaptionBorder);
 		btnRunningactivity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
 				
@@ -143,9 +164,10 @@ public class HeartSimInterface extends JFrame {
 				contentPane.add(activityPanel);
 			}
 		});
-		btnRunningactivity.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnRunningactivity.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		JButton btnTachycardiaHeartRate = new JButton("Tachycardia Heart Rate");
+		btnTachycardiaHeartRate.setBackground(SystemColor.inactiveCaptionBorder);
 		btnTachycardiaHeartRate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
 				
@@ -162,32 +184,34 @@ public class HeartSimInterface extends JFrame {
 			}
 		});
 		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 1, 1));
-		btnTachycardiaHeartRate.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnTachycardiaHeartRate.setFont(new Font("Tahoma", Font.BOLD, 15));
+		//lblG.se
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btnBradyRate, GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
-						.addComponent(btnNormalRate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
-						.addComponent(btnTachycardiaHeartRate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
-						.addComponent(btnRunningactivity, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE))
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addComponent(btnNormalRate, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addComponent(btnBradyRate, GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnTachycardiaHeartRate, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnRunningactivity, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
-				gl_contentPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-						.addContainerGap(330, Short.MAX_VALUE)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(314, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNormalRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(btnBradyRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(btnTachycardiaHeartRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(btnRunningactivity, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap())
-			);
+						.addComponent(btnRunningactivity, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
+					.addGap(180))
+		);
 		contentPane.setLayout(gl_contentPane);
 		getContentPane().add(tabbedPane);
 		

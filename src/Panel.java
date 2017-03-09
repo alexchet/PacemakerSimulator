@@ -6,22 +6,29 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 public class Panel extends JPanel{
 	Graphics2D graph;
     BufferedImage bufferedImage;
     int spaceBetweenpoints = 20;
 	ArrayList<Point> panelList;
+	int width = 800;
+	int x1 = 5;
+	int y1 = 5;
+	Border blackline = BorderFactory.createLineBorder(Color.black);
 	
 	public Panel(ArrayList<Point> list) {
 		panelList = list;
-		setBounds(10,10,600,300);
+		setBounds(x1,y1,width,300);
         bufferedImage = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
         graph = bufferedImage.createGraphics();
         graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graph.setColor(Color.white);
-        graph.fillRect(0,0,900,300);       	
+        graph.fillRect(0,0,width,300);
+        
 	}
 	
 	public void deletePoints(int x,int width) {
@@ -31,7 +38,7 @@ public class Panel extends JPanel{
     
     public void resetGraph(){
         graph.setColor(Color.white);
-        graph.fillRect(0,0,900,300);
+        graph.fillRect(0,0,width,300);
     }
     
     public void continousDraw() {

@@ -52,7 +52,9 @@ public class HeartSimInterface extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		new HeartSimInterface();
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		
+		new HeartSimInterface(tabbedPane);
 	}
 
 	/**
@@ -74,17 +76,11 @@ public class HeartSimInterface extends JFrame {
 		activityFlag=false;
     }
     
-	public HeartSimInterface() {
+	public HeartSimInterface(JTabbedPane tabbedPane) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 744, 597);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setSize(getContentPane().getWidth(), getContentPane().getHeight());
-		tabbedPane.setBounds(100, 100, 744, 597);
-		
 		contentPane = new JPanel();
-		contentPane.setSize(getContentPane().getWidth(), getContentPane().getHeight());
-		contentPane.setBounds(100, 100, 744, 597);
 		tabbedPane.addTab("Heart Simulator",contentPane);
 		
 		JButton btnNormalRate = new JButton("Normal Heart Rate");

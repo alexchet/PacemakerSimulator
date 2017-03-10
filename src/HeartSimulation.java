@@ -17,19 +17,9 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class HeartSimulation extends JFrame{
-	JPanel contentPane;
-	
-	Panel normalPanel;
-	Panel bradyPanel;
-	Panel tachyPanel;
-	Panel activityPanel;
-	JPanel initialPanel;
-         
-    boolean normalFlag=false;
-    boolean bradyFlag = false;
-    boolean tachyFlag = false;
-    boolean activityFlag = false;
-   
+	JPanel contentPane, initialPanel;
+	Panel normalPanel, bradyPanel, tachyPanel, activityPanel;         
+    boolean normalFlag, bradyFlag, tachyFlag, activityFlag;
 	int countHeartBeats = 0;
 
     /**
@@ -44,8 +34,7 @@ public class HeartSimulation extends JFrame{
 		contentPane.setBounds(100, 100, 751, 620);
 		
 		initialPanel = new JPanel();
-		initialPanel.setBounds(5,5,800,300);		
-		initialPanel.setBorder(BorderFactory.createLineBorder(Color.white, 2));
+		initialPanel.setBounds(5,5,820,300);		
 		initialPanel.setBackground(Color.white);
 				
 		contentPane.add(initialPanel);
@@ -54,18 +43,20 @@ public class HeartSimulation extends JFrame{
 		JButton btnNormalRate = new JButton("Normal Heart Rate");
 		btnNormalRate.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {				
-				countHeartBeats = 0;
-				heartRate.reset();
-				heartRate.startHeart(RatePoints.getNormalRates());
-				normalPanel = new Panel(heartRate.getRatesList());
-				
-				resetPanels();
-				resetFlags();
-				normalPanel.resetGraph();
-				
-				normalFlag = true;
-				contentPane.add(normalPanel);
+			public void mouseClicked(MouseEvent arg0) {	
+				if (!normalFlag) {
+					countHeartBeats = 0;
+					heartRate.reset();
+					heartRate.startHeart(RatePoints.getNormalRates());
+					normalPanel = new Panel(heartRate.getRatesList());
+					
+					resetPanels();
+					resetFlags();
+					normalPanel.resetGraph();
+					
+					normalFlag = true;
+					contentPane.add(normalPanel);
+				}
 			}
 		});
 		btnNormalRate.setBackground(SystemColor.inactiveCaptionBorder);
@@ -74,56 +65,62 @@ public class HeartSimulation extends JFrame{
 		JButton btnBradyRate = new JButton("Bradycardia Heart Rate");
 		btnBradyRate.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {				
-				countHeartBeats = 0;
-				heartRate.reset();
-				heartRate.startHeart(RatePoints.getBrachycardicRates());
-				bradyPanel = new Panel(heartRate.getRatesList());
-				
-				resetPanels();
-				resetFlags();
-				bradyPanel.resetGraph();
-				
-				bradyFlag = true;
-				contentPane.add(bradyPanel);
+			public void mouseClicked(MouseEvent e) {
+				if (!bradyFlag) {
+					countHeartBeats = 0;
+					heartRate.reset();
+					heartRate.startHeart(RatePoints.getBrachycardicRates());
+					bradyPanel = new Panel(heartRate.getRatesList());
+					
+					resetPanels();
+					resetFlags();
+					bradyPanel.resetGraph();
+					
+					bradyFlag = true;
+					contentPane.add(bradyPanel);
+				}
 			}
 		});
 		btnBradyRate.setBackground(SystemColor.inactiveCaptionBorder);
 		btnBradyRate.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		JButton btnRunningactivity = new JButton("Running Activity");
-		btnRunningactivity.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {				
-				countHeartBeats = 0;
-				heartRate.reset();
-				heartRate.startHeart(RatePoints.getRunningActivityRates());
-				activityPanel = new Panel(heartRate.getRatesList());
-				
-				resetPanels();
-				resetFlags();
-				activityPanel.resetGraph();
-				
-				activityFlag = true;
-				contentPane.add(activityPanel);
+		btnRunningactivity.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {				
+				if (!activityFlag) {
+					countHeartBeats = 0;
+					heartRate.reset();
+					heartRate.startHeart(RatePoints.getRunningActivityRates());
+					activityPanel = new Panel(heartRate.getRatesList());
+					
+					resetPanels();
+					resetFlags();
+					activityPanel.resetGraph();
+					
+					activityFlag = true;
+					contentPane.add(activityPanel);
+				}
 			}
 		});
 		btnRunningactivity.setBackground(SystemColor.inactiveCaptionBorder);
 		btnRunningactivity.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		JButton btnTachycardiaHeartRate = new JButton("Tachycardia Heart Rate");
-		btnTachycardiaHeartRate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {				
-				countHeartBeats = 0;
-				heartRate.reset();
-				heartRate.startHeart(RatePoints.getTachycardicRates());
-				tachyPanel = new Panel(heartRate.getRatesList());
-				
-				resetPanels();
-				resetFlags();
-				tachyPanel.resetGraph();
-				
-				tachyFlag = true;
-				contentPane.add(tachyPanel);
+		btnTachycardiaHeartRate.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {					
+				if (!tachyFlag) {
+					countHeartBeats = 0;
+					heartRate.reset();
+					heartRate.startHeart(RatePoints.getTachycardicRates());
+					tachyPanel = new Panel(heartRate.getRatesList());
+					
+					resetPanels();
+					resetFlags();
+					tachyPanel.resetGraph();
+					
+					tachyFlag = true;
+					contentPane.add(tachyPanel);
+				}
 			}
 		});
 		btnTachycardiaHeartRate.setBackground(SystemColor.inactiveCaptionBorder);
@@ -197,8 +194,8 @@ public class HeartSimulation extends JFrame{
     
     public void resetFlags() {
     	normalFlag = false;
-		bradyFlag= false;
-		tachyFlag=false;
-		activityFlag=false;
+		bradyFlag = false;
+		tachyFlag = false;
+		activityFlag = false;
     }
 }

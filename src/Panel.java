@@ -15,7 +15,7 @@ public class Panel extends JPanel{
     BufferedImage bufferedImage;
     int spaceBetweenpoints = 20;
 	ArrayList<Point> panelList;
-	int width = 800;
+	int width = 820;
 	int x1 = 5;
 	int y1 = 5;
 	Border blackline = BorderFactory.createLineBorder(Color.black);
@@ -27,8 +27,7 @@ public class Panel extends JPanel{
         graph = bufferedImage.createGraphics();
         graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graph.setColor(Color.white);
-        graph.fillRect(0,0,width,300);
-        
+        graph.fillRect(0,0,width,300);       
 	}
 	
 	public void deletePoints(int x,int width) {

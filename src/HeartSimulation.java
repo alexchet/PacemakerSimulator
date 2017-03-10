@@ -45,7 +45,6 @@ public class HeartSimulation extends JFrame{
 		
 		initialPanel = new JPanel();
 		initialPanel.setBounds(5,5,820,300);		
-		initialPanel.setBorder(BorderFactory.createLineBorder(Color.white, 2));
 		initialPanel.setBackground(Color.white);
 				
 		contentPane.add(initialPanel);

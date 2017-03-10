@@ -27,8 +27,7 @@ public class Panel extends JPanel{
         graph = bufferedImage.createGraphics();
         graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graph.setColor(Color.white);
-        graph.fillRect(0,0,width,300);
-        
+        graph.fillRect(0,0,width,300);       
 	}
 	
 	public void deletePoints(int x,int width) {

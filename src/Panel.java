@@ -15,7 +15,7 @@ public class Panel extends JPanel{
     BufferedImage bufferedImage;
     int spaceBetweenpoints = 20;
 	ArrayList<Point> panelList;
-	int width = 800;
+	int width = 820;
 	int x1 = 5;
 	int y1 = 5;
 	Border blackline = BorderFactory.createLineBorder(Color.black);

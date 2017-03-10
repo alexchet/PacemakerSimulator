@@ -19,8 +19,6 @@ public class Interface extends JFrame{
 		tabbedPane.setBackground(SystemColor.text);
 		tabbedPane.setFont(new Font("Tahoma", Font.BOLD, 15));
 		tabbedPane.setBounds(100, 100, 751, 633);
-		//tabbedPane.setForegroundAt(0, new Color(0, 0, 0));
-		//tabbedPane.setBackgroundAt(0, SystemColor.activeCaption);
 		
 		HeartRate heartRate = new HeartRate();
 

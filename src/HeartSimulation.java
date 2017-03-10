@@ -17,19 +17,9 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class HeartSimulation extends JFrame{
-	JPanel contentPane;
-	
-	Panel normalPanel;
-	Panel bradyPanel;
-	Panel tachyPanel;
-	Panel activityPanel;
-	JPanel initialPanel;
-         
-    boolean normalFlag=false;
-    boolean bradyFlag = false;
-    boolean tachyFlag = false;
-    boolean activityFlag = false;
-   
+	JPanel contentPane, initialPanel;
+	Panel normalPanel, bradyPanel, tachyPanel, activityPanel;         
+    boolean normalFlag, bradyFlag, tachyFlag, activityFlag;
 	int countHeartBeats = 0;
 
     /**
@@ -204,8 +194,8 @@ public class HeartSimulation extends JFrame{
     
     public void resetFlags() {
     	normalFlag = false;
-		bradyFlag= false;
-		tachyFlag=false;
-		activityFlag=false;
+		bradyFlag = false;
+		tachyFlag = false;
+		activityFlag = false;
     }
 }

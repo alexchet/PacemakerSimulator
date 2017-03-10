@@ -40,18 +40,34 @@ public class Panel extends JPanel{
         graph.fillRect(0,0,width,300);
     }
     
-    public void continousDraw(int c) {
+    public void continousDraw(int c, boolean showPointer) {
         //Checks if i passed two points before doing anything, it draws the image
         //the image in this case is the rectangle
         if(panelList.size() > c + 1) {
             graph.drawImage(bufferedImage,0,0, getWidth()-spaceBetweenpoints,getHeight(),spaceBetweenpoints,0,getWidth(),getHeight(),null);
             deletePoints(getWidth()-spaceBetweenpoints,spaceBetweenpoints);
-            graph.setColor(Color.BLACK);
+            
             Point point1;
             Point point2;
             point1 = panelList.get(c);
             point2 = panelList.get(c + 1);
+            
+            graph.setColor(Color.BLACK);
             graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
+
+            if (showPointer) {
+		        if (point1.y == 40 && point2.y == -40)
+		        {
+		        	graph.setColor(Color.BLUE);
+		            graph.drawLine(getWidth()-spaceBetweenpoints+18,point1.y+getHeight()+1,getWidth()-1,0);
+		        }	
+		       
+		        if (point1.y == 40 && point2.y == 10)
+		        {
+		        	graph.setColor(Color.RED);
+		            graph.drawLine(getWidth()-spaceBetweenpoints+18,point1.y+getHeight()+1,getWidth()-1,0);
+		        }	
+        	}
         }
     }
 

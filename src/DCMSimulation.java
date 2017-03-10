@@ -67,13 +67,12 @@ public class DCMSimulation extends JFrame{
 		     public void run() {
 		        try {
 					while (true) {
-						System.out.println(heartBeatPanel);
 						if (heartBeatPanel != null) { 
-							heartBeatPanel.continousDraw(countHeartBeats);
+							heartBeatPanel.continousDraw(countHeartBeats, true);
 							countHeartBeats++;
 							repaint();
-							Thread.sleep(200);
 						}
+						Thread.sleep(200);
 					}
 		        } catch (InterruptedException e) {}
 		     }

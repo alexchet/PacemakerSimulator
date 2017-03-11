@@ -56,17 +56,43 @@ public class Panel extends JPanel{
             graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
 
             if (showPointer) {
-		        if (point1.y == 40 && point2.y == -40)
-		        {
-		        	graph.setColor(Color.BLUE);
-		            graph.drawLine(getWidth()-spaceBetweenpoints+18,point1.y+getHeight()+1,getWidth()-1,0);
-		        }	
-		       
-		        if (point1.y == 40 && point2.y == 10)
-		        {
-		        	graph.setColor(Color.RED);
-		            graph.drawLine(getWidth()-spaceBetweenpoints+18,point1.y+getHeight()+1,getWidth()-1,0);
-		        }	
+            	PacingModes pm = PacingModes.ATRIUM;
+            	SensingModes sm = SensingModes.DUAL;
+            	ResponseModes rm = ResponseModes.INHIBITED;
+            	//Sensing Switch
+            	switch (sm) {
+            	case NONE:
+        			// do nothing;
+            		break;
+            	case ATRIUM:
+			        if (point1.y == 40 && point2.y == 10)
+			        {
+			        	graph.setColor(Color.RED);
+			            graph.drawLine(getWidth()-15,point1.y+getHeight()+1,getWidth()-15,0);
+			        }	
+            		break;
+            	case VENTRICAL:
+			        if (point1.y == 40 && point2.y == -40)
+			        {
+			        	graph.setColor(Color.RED);
+			            graph.drawLine(getWidth()-15,point1.y+getHeight()+1,getWidth()-15,0);
+			            
+			        }	
+            		break;
+            	case DUAL:
+			        if (point1.y == 40 && point2.y == 10)
+			        {
+			        	graph.setColor(Color.RED);
+			            graph.drawLine(getWidth()-15,point1.y+getHeight()+1,getWidth()-15,0);
+			        }	
+			        if (point1.y == 40 && point2.y == -40)
+			        {
+			        	graph.setColor(Color.RED);
+			            graph.drawLine(getWidth()-15,point1.y+getHeight()+1,getWidth()-15,0);
+			            
+			        }	
+            		break;
+            	}
         	}
         }
     }

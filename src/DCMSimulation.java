@@ -20,7 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
 public class DCMSimulation extends JFrame{
-	JPanel contentPane, initialPanel;
+	JPanel contentPane, initialPanel, secondPanel;
 	Panel heartBeatPanel;
 	int countHeartBeats = 0;
 
@@ -33,10 +33,15 @@ public class DCMSimulation extends JFrame{
 		contentPane.setBounds(100, 100, 832, 694);
 		
 		initialPanel = new JPanel();
-		initialPanel.setBounds(5,5,820,300);		
+		initialPanel.setBounds(5,5,820,190);		
 		initialPanel.setBackground(Color.white);
+		
+		secondPanel = new JPanel();
+		secondPanel.setBounds(5, 200, 820, 200);
+		secondPanel.setBackground(Color.white);
 				
 		contentPane.add(initialPanel);
+		contentPane.add(secondPanel);
 		
 		JButton btnHeartRate = new JButton("Heart Rate");
 		btnHeartRate.addMouseListener(new MouseAdapter() {
@@ -46,6 +51,7 @@ public class DCMSimulation extends JFrame{
 					countHeartBeats = 0;
 					if (initialPanel != null) contentPane.remove(initialPanel);
 					if (heartBeatPanel != null) contentPane.remove(heartBeatPanel);
+					if (secondPanel != null) contentPane.remove(secondPanel);
 					heartBeatPanel = new Panel(heartRate.getRatesList());
 					heartBeatPanel.resetGraph();
 					contentPane.add(heartBeatPanel);

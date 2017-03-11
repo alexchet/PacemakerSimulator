@@ -22,12 +22,12 @@ public class Panel extends JPanel{
 	
 	public Panel(ArrayList<Point> list) {
 		panelList = list;
-		setBounds(x1,y1,width,300);
+		setBounds(x1,y1,width,190);
         bufferedImage = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
         graph = bufferedImage.createGraphics();
         graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graph.setColor(Color.white);
-        graph.fillRect(0,0,width,300);       
+        graph.fillRect(0,0,width,190);       
 	}
 	
 	public void deletePoints(int x,int width) {
@@ -37,7 +37,7 @@ public class Panel extends JPanel{
     
     public void resetGraph(){
         graph.setColor(Color.white);
-        graph.fillRect(0,0,width,300);
+        graph.fillRect(0,0,width,190);
     }
     
     public void continousDraw(int c, boolean showPointer) {

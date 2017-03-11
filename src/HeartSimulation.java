@@ -174,19 +174,19 @@ public class HeartSimulation extends JFrame{
 		        try {
 					while (true) {
 						if (normalFlag) {
-				                normalPanel.continousDraw(countHeartBeats, false);
+				                normalPanel.continousDraw(countHeartBeats, false, false, null);
 						}
 		
 						if (bradyFlag) {
-				                bradyPanel.continousDraw(countHeartBeats, false);
+				                bradyPanel.continousDraw(countHeartBeats, false, false, null);
 						}
 		
 						if (tachyFlag) {
-				                tachyPanel.continousDraw(countHeartBeats, false);
+				                tachyPanel.continousDraw(countHeartBeats, false, false, null);
 						}
 		
 						if (activityFlag) {
-				                activityPanel.continousDraw(countHeartBeats, false);
+				                activityPanel.continousDraw(countHeartBeats, false, false, null);
 						}
 						countHeartBeats++;
 			            repaint();

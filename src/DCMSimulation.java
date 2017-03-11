@@ -1,8 +1,10 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -14,15 +16,13 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
 public class DCMSimulation extends JFrame{
 	JPanel contentPane, initialPanel, secondPanel;
-	Panel heartBeatPanel;
-	int countHeartBeats = 0;
+	Panel heartBeatPanel, normalPanel;
+	ArrayList<Point> pacedList = new ArrayList<Point>();
 
     /**
 	 * Create the frame.
@@ -37,24 +37,37 @@ public class DCMSimulation extends JFrame{
 		initialPanel.setBackground(Color.white);
 		
 		secondPanel = new JPanel();
-		secondPanel.setBounds(5, 200, 820, 200);
+		secondPanel.setBounds(5, 200, 820, 190);
 		secondPanel.setBackground(Color.white);
 				
 		contentPane.add(initialPanel);
 		contentPane.add(secondPanel);
+		
+		HeartRate normalHeartRate = new HeartRate();
 		
 		JButton btnHeartRate = new JButton("Heart Rate");
 		btnHeartRate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (heartRate.getRatesList() != null) {
-					countHeartBeats = 0;
 					if (initialPanel != null) contentPane.remove(initialPanel);
-					if (heartBeatPanel != null) contentPane.remove(heartBeatPanel);
 					if (secondPanel != null) contentPane.remove(secondPanel);
+					
+					//Top panel to show sensing
+					if (heartBeatPanel != null) contentPane.remove(heartBeatPanel);
 					heartBeatPanel = new Panel(heartRate.getRatesList());
 					heartBeatPanel.resetGraph();
+					heartBeatPanel.setBounds(5,5,820,190);
 					contentPane.add(heartBeatPanel);
+					
+					//Lower panel to show normal heart rate
+					if (normalPanel != null) contentPane.remove(normalPanel);
+					normalHeartRate.reset();
+					normalPanel = new Panel();
+					normalPanel.resetGraph();
+					normalPanel.setBounds(5, 200, 820, 190);
+					contentPane.add(normalPanel);
+					
 					btnHeartRate.setBorder(new LineBorder(Color.GREEN));
 				} else {
 					btnHeartRate.setBorder(new LineBorder(Color.RED));
@@ -154,13 +167,40 @@ public class DCMSimulation extends JFrame{
 
 		new Thread(new Runnable() {
 		     public void run() {
+	    		int countHeartBeats = 0;
 		        try {
 					while (true) {
-						if (heartBeatPanel != null) { 
-							heartBeatPanel.continousDraw(countHeartBeats, true);
-							countHeartBeats++;
-							repaint();
+						if (heartBeatPanel != null) {
+							heartBeatPanel.continousDraw(countHeartBeats, false, false, null);
 						}
+						countHeartBeats++;
+						Thread.sleep(200);
+					}
+		        } catch (InterruptedException e) {}
+		     }
+		}).start();
+
+		new Thread(new Runnable() {
+		     public void run() {
+	    		int countHeartBeats = 0;
+	    		int countPacedBeats = 0;
+		        try {
+					while (true) {
+						if (normalPanel != null) { 
+							if(heartRate.ratesList.size() > countPacedBeats + 2) {
+								pacedList.add(heartRate.ratesList.get(countPacedBeats));
+								countPacedBeats++;
+								pacedList.add(heartRate.ratesList.get(countPacedBeats));
+								countPacedBeats++;
+							}
+							boolean skipPoint = normalPanel.continousDraw(countHeartBeats, true, true, pacedList);
+							if (skipPoint) {
+								countPacedBeats = countPacedBeats - 2;
+								pacedList.remove(pacedList.size()-1);
+								pacedList.remove(pacedList.size()-1);
+							}
+						}
+						countHeartBeats++;
 						Thread.sleep(200);
 					}
 		        } catch (InterruptedException e) {}

@@ -9,8 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.border.LineBorder;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class DCMSimulation extends JFrame{
 	JPanel contentPane, initialPanel;
@@ -35,13 +35,17 @@ public class DCMSimulation extends JFrame{
 		btnHeartRate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				countHeartBeats = 0;
-				if (initialPanel != null) contentPane.remove(initialPanel);
-				if (heartBeatPanel != null) contentPane.remove(heartBeatPanel);
-				heartBeatPanel = new Panel(heartRate.getRatesList());
-				heartBeatPanel.resetGraph();
-				
-				contentPane.add(heartBeatPanel);
+				if (heartRate.getRatesList() != null) {
+					countHeartBeats = 0;
+					if (initialPanel != null) contentPane.remove(initialPanel);
+					if (heartBeatPanel != null) contentPane.remove(heartBeatPanel);
+					heartBeatPanel = new Panel(heartRate.getRatesList());
+					heartBeatPanel.resetGraph();
+					contentPane.add(heartBeatPanel);
+					btnHeartRate.setBorder(new LineBorder(Color.GREEN));
+				} else {
+					btnHeartRate.setBorder(new LineBorder(Color.RED));
+				}
 			}
 		});
 		btnHeartRate.setBackground(SystemColor.inactiveCaptionBorder);

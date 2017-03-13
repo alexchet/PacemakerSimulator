@@ -26,6 +26,10 @@ public class Panel extends JPanel{
 	boolean batriumPaced, bventricalPaced;
 	boolean skipPoint;
 	
+	PacingModes paceMode;
+	SensingModes senseMode; 
+	ResponseModes respondMode;
+	
 	
 	public Panel(ArrayList<Point> list) {
 		panelList = list;
@@ -56,6 +60,12 @@ public class Panel extends JPanel{
         graph.fillRect(0,0,width,190);
     }
     
+    public void setModes(PacingModes pm, SensingModes sm, ResponseModes rm) {
+    	paceMode = pm;
+    	senseMode = sm;
+    	respondMode = rm;  	
+    }
+    
     public boolean continousDraw(int c, boolean showSensing, boolean showPacing, ArrayList<Point> p) {
         //Checks if i passed two points before doing anything, it draws the image
         //the image in this case is the rectangle
@@ -69,13 +79,14 @@ public class Panel extends JPanel{
             Point point2;
             point1 = panelList.get(c);
             point2 = panelList.get(c + 1);
-        	PacingModes pm = PacingModes.DUAL;
-        	SensingModes sm = SensingModes.DUAL;
-        	ResponseModes rm = ResponseModes.INHIBITED;
-        	            
+
+        	/*PacingModes pm = PacingModes.ATRIUM;
+        	SensingModes sm = SensingModes.ATRIUM;
+        	ResponseModes rm = ResponseModes.INHIBITED;*/   
+            
             if (showSensing) {
             	//Sensing Switch
-            	switch (sm) {
+            	switch (senseMode) {
             	case NONE:
         			// do nothing;
             		break;
@@ -106,9 +117,9 @@ public class Panel extends JPanel{
             }
 
         	if (showPacing) {
-        		switch(pm) {
+        		switch(paceMode) {
         		case ATRIUM:
-        			if (rm == ResponseModes.INHIBITED) {
+        			if (respondMode == ResponseModes.INHIBITED) {
             			if (atriumSensed != 0 && System.currentTimeMillis() - atriumSensed > 1200)
             			{
             				paceAtrial();

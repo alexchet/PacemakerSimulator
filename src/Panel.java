@@ -69,8 +69,8 @@ public class Panel extends JPanel{
             Point point2;
             point1 = panelList.get(c);
             point2 = panelList.get(c + 1);
-        	PacingModes pm = PacingModes.ATRIUM;
-        	SensingModes sm = SensingModes.ATRIUM;
+        	PacingModes pm = PacingModes.DUAL;
+        	SensingModes sm = SensingModes.DUAL;
         	ResponseModes rm = ResponseModes.INHIBITED;
         	            
             if (showSensing) {
@@ -82,34 +82,24 @@ public class Panel extends JPanel{
             	case ATRIUM:
 			        if (point1.y == 40 && point2.y == 10)
 			        {
-			        	graph.setColor(Color.RED);
-			            graph.drawLine(getWidth()-15,point1.y+getHeight()+1,getWidth()-15,0);
-				        atriumSensed = System.currentTimeMillis();
+			        	senseAtrial();
 			        }
             		break;
             	case VENTRICAL:
 			        if (point1.y == 40 && point2.y == -40)
 			        {
-			        	graph.setColor(Color.RED);
-			            graph.drawLine(getWidth()-15,point1.y+getHeight()+1,getWidth()-15,0);
-				        ventricalSensed = System.currentTimeMillis();
-			            
+			        	senseVentrical();
 			        }
             		break;
             	case DUAL:
 			        if (point1.y == 40 && point2.y == 10)
 			        {
-			        	graph.setColor(Color.RED);
-			            graph.drawLine(getWidth()-15,point1.y+getHeight()+1,getWidth()-15,0);
-				        atriumSensed = System.currentTimeMillis();
+			        	senseAtrial();
 			        }
 			        
 			        if (point1.y == 40 && point2.y == -40)
 			        {
-			        	graph.setColor(Color.RED);
-			            graph.drawLine(getWidth()-15,point1.y+getHeight()+1,getWidth()-15,0);
-				        ventricalSensed = System.currentTimeMillis();
-			            
+			        	senseVentrical();
 			        }
             		break;
             	}
@@ -120,22 +110,30 @@ public class Panel extends JPanel{
         		case ATRIUM:
         			if (rm == ResponseModes.INHIBITED) {
             			if (atriumSensed != 0 && System.currentTimeMillis() - atriumSensed > 1200)
-            				if	(atriumPaced == 0) {
-        			        	graph.setColor(Color.BLUE);
-        			            graph.drawLine(getWidth()-15,point1.y+getHeight()+1,getWidth()-15,0);
-            					graph.drawLine(getWidth()-spaceBetweenpoints-1,40+getHeight()/2,getWidth()-1,10+getHeight()/2);
-        			            atriumPaced++;
-            					skipPoint = true;
-            				} else if (atriumPaced == 1) {
-        			        	graph.setColor(Color.BLUE);
-            					graph.drawLine(getWidth()-spaceBetweenpoints-1,10+getHeight()/2,getWidth()-1,40+getHeight()/2);
-            					atriumPaced = 0;
-            					atriumSensed = 0;
-            					skipPoint = true;
-            				} else {
-
-            				}	
+            			{
+            				paceAtrial();
             			}
+        			}
+        			break;
+        		case VENTRICAL:
+        			if (rm == ResponseModes.INHIBITED) {
+            			if (ventricalSensed != 0 && System.currentTimeMillis() - ventricalSensed > 1200)
+            			{
+            				paceVentrical();
+            			}
+        			}
+        			break;
+        		case DUAL:
+        			if (rm == ResponseModes.INHIBITED) {
+            			if (atriumSensed != 0 && System.currentTimeMillis() - atriumSensed > 1200)
+            			{
+            				paceAtrial();
+            			}
+            			if (ventricalSensed != 0 && System.currentTimeMillis() - ventricalSensed > 1200)
+            			{
+            				paceVentrical();
+            			}
+        			}
         			break;
         		}
         	}
@@ -147,6 +145,54 @@ public class Panel extends JPanel{
         }
         
         return skipPoint;
+    }
+    
+    public void senseVentrical()
+    {
+    	graph.setColor(Color.RED);
+        graph.drawLine(getWidth()-15,getHeight()+1,getWidth()-15,0);
+        ventricalSensed = System.currentTimeMillis();
+    }
+    
+    public void senseAtrial()
+    {
+    	graph.setColor(Color.RED);
+        graph.drawLine(getWidth()-15,getHeight()+1,getWidth()-15,0);
+        atriumSensed = System.currentTimeMillis();
+    }
+    
+    public void paceVentrical()
+    {
+    	if	(ventricalPaced == 0) {
+        	graph.setColor(Color.BLUE);
+            graph.drawLine(getWidth()-15,getHeight()+1,getWidth()-15,0);
+			graph.drawLine(getWidth()-spaceBetweenpoints-1,135,getWidth()-1,55);
+			ventricalPaced++;
+			skipPoint = true;
+		} else if (ventricalPaced == 1) {
+        	graph.setColor(Color.BLUE);
+			graph.drawLine(getWidth()-spaceBetweenpoints-1,55,getWidth()-1,135);
+			ventricalPaced = 0;
+			ventricalSensed = 0;
+			skipPoint = true;
+		}
+    }
+    
+    public void paceAtrial()
+    {
+    	if	(atriumPaced == 0) {
+        	graph.setColor(Color.BLUE);
+            graph.drawLine(getWidth()-15,getHeight()+1,getWidth()-15,0);
+			graph.drawLine(getWidth()-spaceBetweenpoints-1,40+getHeight()/2,getWidth()-1,10+getHeight()/2);
+            atriumPaced++;
+			skipPoint = true;
+		} else if (atriumPaced == 1) {
+        	graph.setColor(Color.BLUE);
+			graph.drawLine(getWidth()-spaceBetweenpoints-1,10+getHeight()/2,getWidth()-1,40+getHeight()/2);
+			atriumPaced = 0;
+			atriumSensed = 0;
+			skipPoint = true;
+		}	
     }
 
     public void paint(Graphics g) {

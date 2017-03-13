@@ -278,7 +278,7 @@ public class DCMSimulation extends JFrame{
 		        } catch (InterruptedException e) {}
 		     }
 		}).start();
-
+		
 		new Thread(new Runnable() {
 		     public void run() {
 	    		int countHeartBeats = 0;
@@ -295,11 +295,12 @@ public class DCMSimulation extends JFrame{
 							boolean skipPoint = normalPanel.continousDraw(countHeartBeats, true, true, pacedList);
 							if (skipPoint) {
 								countPacedBeats = countPacedBeats - 2;
+								countHeartBeats--;
 								pacedList.remove(pacedList.size()-1);
 								pacedList.remove(pacedList.size()-1);
 							}
+							countHeartBeats++;
 						}
-						countHeartBeats++;
 						Thread.sleep(200);
 					}
 		        } catch (InterruptedException e) {}

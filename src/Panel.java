@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -23,6 +24,7 @@ public class Panel extends JPanel{
 	long atriumSensed, ventricalSensed, atriumPaced = 0, ventricalPaced = 0;
 	boolean batriumPaced, bventricalPaced;
 	boolean skipPoint;
+	
 	
 	public Panel(ArrayList<Point> list) {
 		panelList = list;

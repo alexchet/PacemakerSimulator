@@ -127,7 +127,7 @@ public class Panel extends JPanel{
         			}
         			break;
         		case VENTRICAL:
-        			if (rm == ResponseModes.INHIBITED) {
+        			if (respondMode == ResponseModes.INHIBITED) {
             			if (ventricalSensed != 0 && System.currentTimeMillis() - ventricalSensed > 1200)
             			{
             				paceVentrical();
@@ -135,7 +135,7 @@ public class Panel extends JPanel{
         			}
         			break;
         		case DUAL:
-        			if (rm == ResponseModes.INHIBITED) {
+        			if (respondMode == ResponseModes.INHIBITED) {
             			if (atriumSensed != 0 && System.currentTimeMillis() - atriumSensed > 1200)
             			{
             				paceAtrial();

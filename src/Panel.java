@@ -146,6 +146,8 @@ public class Panel extends JPanel{
             			}
         			}
         			break;
+        		case NONE:
+        			break;
         		}
         	}
         	

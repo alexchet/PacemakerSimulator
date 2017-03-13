@@ -34,9 +34,9 @@ public class DCMSimulation extends JFrame{
 	Panel heartBeatPanel, normalPanel;
 	ArrayList<Point> pacedList = new ArrayList<Point>();
 	private JTextField textField;
-	PacingModes pm;
-	SensingModes sm;
-	ResponseModes rm;
+	PacingModes pm = PacingModes.NONE;
+	SensingModes sm = SensingModes.NONE;
+	ResponseModes rm = ResponseModes.NONE;
 
     /**
 	 * Create the frame.
@@ -195,7 +195,6 @@ public class DCMSimulation extends JFrame{
 		}else if(comboBox_2.getSelectedIndex()==1) {
 			rm= rm.TRIGGERED;
 		}else if(comboBox_2.getSelectedIndex()==2) {
-			System.out.println("test");
 			rm = rm.INHIBITED;
 		}else if(comboBox_2.getSelectedIndex()==3) {
 			rm = rm.TRACKED;
@@ -369,7 +368,6 @@ public class DCMSimulation extends JFrame{
 		        try {
 					while (true) {
 						if (normalPanel != null) { 
-			    			System.out.println(rm);
 			    			normalPanel.setModes(pm, sm, rm);
 							if(heartRate.ratesList.size() > countPacedBeats + 2) {
 								pacedList.add(heartRate.ratesList.get(countPacedBeats));

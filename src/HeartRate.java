@@ -15,7 +15,7 @@ public class HeartRate {
     public void startHeart(int[] _rates){
         rates = _rates;
         
-        while (ratesList.size() < 100)
+        while (ratesList.size() < 10000)
         {
             for(int i=0; i<rates.length; i++){
                 int p = rates[i];

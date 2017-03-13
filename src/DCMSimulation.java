@@ -84,7 +84,7 @@ public class DCMSimulation extends JFrame{
 			gl_secondPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_secondPanel.createSequentialGroup()
 					.addComponent(lblPacedHeartRate)
-					.addContainerGap(179, Short.MAX_VALUE))
+					.addContainerGap(169, Short.MAX_VALUE))
 		);
 		secondPanel.setLayout(gl_secondPanel);
 
@@ -180,6 +180,9 @@ public class DCMSimulation extends JFrame{
 		recording.add(rdbtnFixed);
 		recording.add(rdbtnContinuous);
 		
+		JLabel label_1 = new JLabel("Paced Heart Rate");
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 17));
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -224,14 +227,19 @@ public class DCMSimulation extends JFrame{
 									.addContainerGap())))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(label, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(649, Short.MAX_VALUE))))
+							.addContainerGap(649, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(label_1)
+							.addContainerGap(764, Short.MAX_VALUE))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(label, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 505, Short.MAX_VALUE)
+					.addGap(166)
+					.addComponent(label_1)
+					.addPreferredGap(ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnHeartRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()

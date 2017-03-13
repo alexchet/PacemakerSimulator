@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -19,6 +20,7 @@ public class Panel extends JPanel{
 	int x1 = 5;
 	int y1 = 5;
 	Border blackline = BorderFactory.createLineBorder(Color.black);
+	
 	
 	public Panel(ArrayList<Point> list) {
 		panelList = list;

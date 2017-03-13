@@ -58,7 +58,7 @@ public class Panel extends JPanel{
         //the image in this case is the rectangle
         skipPoint = false;
     	if (p != null) panelList = p;
-        if(panelList.size() > c + 1) {
+        if(panelList.size() >= c + 1) {
             graph.drawImage(bufferedImage,0,0, getWidth()-spaceBetweenpoints,getHeight(),spaceBetweenpoints,0,getWidth(),getHeight(),null);
             deletePoints(getWidth()-spaceBetweenpoints,spaceBetweenpoints);
             

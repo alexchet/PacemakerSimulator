@@ -240,7 +240,6 @@ public class DCMSimulation extends JFrame{
 					comboBox.setEnabled(false);
 					comboBox_1.setEnabled(false);
 					comboBox_2.setEnabled(false);
-					
 				}
 			}
 		});
@@ -306,12 +305,15 @@ public class DCMSimulation extends JFrame{
 		sensedDelay.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		sensedDelay.setColumns(10);
 		
-		JLabel lblBattreyTest = new JLabel("Battrey Test");
-		lblBattreyTest.setFont(new Font("Tahoma", Font.BOLD, 16));
-		
 		JButton btnLowBattreySim = new JButton("Low Battrey Sim");
 		btnLowBattreySim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				comboBox.setSelectedIndex(2);
+				comboBox_1.setSelectedIndex(2);
+				comboBox_2.setSelectedIndex(2);
+				comboBox.setEnabled(false);
+				comboBox_1.setEnabled(false);
+				comboBox_2.setEnabled(false);
 			}
 		});
 		btnLowBattreySim.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -322,69 +324,65 @@ public class DCMSimulation extends JFrame{
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(label, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(651, Short.MAX_VALUE))
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(label_1)
-								.addContainerGap(675, Short.MAX_VALUE))
-							.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addComponent(label, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(651, Short.MAX_VALUE))
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addComponent(label_1)
+							.addContainerGap(675, Short.MAX_VALUE))
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(btnHeartRate, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
-								.addGap(12)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-									.addGroup(gl_contentPane.createSequentialGroup()
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(lblChambersPaced, GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(lblChambersSensed, GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
-									.addGroup(gl_contentPane.createSequentialGroup()
-										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-											.addComponent(rdbtnPacenowStae, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)
-											.addComponent(rdbtnPoweronresetState)
-											.addGroup(gl_contentPane.createSequentialGroup()
-												.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-													.addGroup(gl_contentPane.createSequentialGroup()
-														.addComponent(rdbtnTemporaryState)
-														.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-														.addComponent(lblSensedDelay))
-													.addGroup(gl_contentPane.createSequentialGroup()
-														.addComponent(rdbtnPermanentState)
-														.addGap(18)
-														.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)))
-												.addPreferredGap(ComponentPlacement.RELATED)
-												.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-													.addComponent(sensedDelay, 0, 0, Short.MAX_VALUE)
-													.addComponent(comboBox_1, 0, 128, Short.MAX_VALUE))))
-										.addGap(8)))
-								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(btnLowBattreySim, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE))
+							.addGap(12)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblChambersPaced, GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblChambersSensed, GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(rdbtnPacenowStae, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)
+										.addComponent(rdbtnPoweronresetState)
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+												.addGroup(gl_contentPane.createSequentialGroup()
+													.addComponent(rdbtnTemporaryState)
+													.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+													.addComponent(lblSensedDelay))
+												.addGroup(gl_contentPane.createSequentialGroup()
+													.addComponent(rdbtnPermanentState)
+													.addGap(18)
+													.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)))
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+												.addComponent(sensedDelay, 0, 0, Short.MAX_VALUE)
+												.addComponent(comboBox_1, 0, 128, Short.MAX_VALUE))))
+									.addGap(8)))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+									.addGroup(gl_contentPane.createSequentialGroup()
+										.addComponent(rdbtnContinuous, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
+										.addContainerGap())
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 										.addGroup(gl_contentPane.createSequentialGroup()
-											.addComponent(rdbtnContinuous, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
+											.addComponent(rdbtnFixed)
 											.addContainerGap())
 										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 											.addGroup(gl_contentPane.createSequentialGroup()
-												.addComponent(rdbtnFixed)
-												.addContainerGap())
-											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-												.addGroup(gl_contentPane.createSequentialGroup()
-													.addComponent(lblResponseToSensing, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-													.addGap(111))
-												.addGroup(gl_contentPane.createSequentialGroup()
-													.addComponent(lblRecordingModes, GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-													.addContainerGap()))))
-									.addGroup(gl_contentPane.createSequentialGroup()
-										.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
-										.addContainerGap()))))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnLowBattreySim, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblBattreyTest, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE))
-							.addContainerGap())))
+												.addComponent(lblResponseToSensing, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addGap(111))
+											.addGroup(gl_contentPane.createSequentialGroup()
+												.addComponent(lblRecordingModes, GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+												.addContainerGap()))))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap())))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -423,14 +421,12 @@ public class DCMSimulation extends JFrame{
 									.addComponent(rdbtnFixed)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(rdbtnContinuous)))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblBattreyTest, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnLowBattreySim, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-							.addGap(77))
+							.addGap(149))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(btnHeartRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnLowBattreySim, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+							.addGap(184))))
 		);
 
 		new Thread(new Runnable() {

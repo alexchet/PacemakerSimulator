@@ -30,6 +30,9 @@ public class Panel extends JPanel{
 	SensingModes senseMode; 
 	ResponseModes respondMode;
 	
+	boolean correctStateMode=false;
+	
+	
 	
 	public Panel(ArrayList<Point> list) {
 		panelList = list;
@@ -65,6 +68,27 @@ public class Panel extends JPanel{
     	senseMode = sm;
     	respondMode = rm;  	
     }
+       
+    public void checkStates(String state){
+    	
+    	String mode = paceMode.getMode()+""+senseMode.getMode()+""+respondMode.getMode();
+    	if(state.equals("Permanent State")) {
+    		if(mode.equals("333") || mode.equals("223") || mode.equals("311") || mode.equals("221") || mode.equals("411") || mode.equals("443")) { 
+    			correctStateMode=true;
+    		}
+    	}else if(state.equals("Temporary State")) {
+    		if( mode.equals("141") || mode.equals("121") || mode.equals("131") || mode.equals("111") ) {
+    			correctStateMode=true;
+    		}
+    	}else if(state.equals("Pace-Now State")) {
+    		correctStateMode =true;
+    	}else if(state.equals("Power-On-Reset State")) {
+    		correctStateMode = true;
+    	}else{
+    		correctStateMode=false;
+    	}
+    	
+    }
     
     public boolean continousDraw(int c, boolean showSensing, boolean showPacing, ArrayList<Point> p) {
         //Checks if i passed two points before doing anything, it draws the image
@@ -80,10 +104,7 @@ public class Panel extends JPanel{
             point1 = panelList.get(c);
             point2 = panelList.get(c + 1);
 
-        	/*PacingModes pm = PacingModes.ATRIUM;
-        	SensingModes sm = SensingModes.ATRIUM;
-        	ResponseModes rm = ResponseModes.INHIBITED;*/   
-            
+            if(correctStateMode){
             if (showSensing) {
             	//Sensing Switch
             	switch (senseMode) {
@@ -150,7 +171,7 @@ public class Panel extends JPanel{
         			break;
         		}
         	}
-        	
+            }
             if (!skipPoint) {
 	            graph.setColor(Color.BLACK);
 	            graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);

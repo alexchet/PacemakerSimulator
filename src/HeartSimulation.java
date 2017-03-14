@@ -37,21 +37,14 @@ public class HeartSimulation extends JFrame{
 		initialPanel.setBackground(Color.white);
 				
 		contentPane.add(initialPanel);
-		
-		JLabel lblPatientsHeartRate = new JLabel("Patient's Heart Rate");
-		lblPatientsHeartRate.setFont(new Font("Tahoma", Font.BOLD, 17));
 		GroupLayout gl_initialPanel = new GroupLayout(initialPanel);
 		gl_initialPanel.setHorizontalGroup(
 			gl_initialPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_initialPanel.createSequentialGroup()
-					.addComponent(lblPatientsHeartRate)
-					.addContainerGap(681, Short.MAX_VALUE))
+				.addGap(0, 820, Short.MAX_VALUE)
 		);
 		gl_initialPanel.setVerticalGroup(
 			gl_initialPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_initialPanel.createSequentialGroup()
-					.addComponent(lblPatientsHeartRate)
-					.addContainerGap(173, Short.MAX_VALUE))
+				.addGap(0, 190, Short.MAX_VALUE)
 		);
 		initialPanel.setLayout(gl_initialPanel);
 		
@@ -156,13 +149,17 @@ public class HeartSimulation extends JFrame{
 				resetPanels();
 				resetFlags();
 				contentPane.add(initialPanel);
+			
 			}
 		});
 		btnStopSimulation.setBackground(SystemColor.inactiveCaptionBorder);
 		btnStopSimulation.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
-		JLabel label = new JLabel("Patient's Heart Rate");
-		label.setFont(new Font("Tahoma", Font.BOLD, 17));
+		JLabel lblPatientsHeartRate = new JLabel("Patient's Heart Rate");
+		lblPatientsHeartRate.setBackground(Color.WHITE);
+		lblPatientsHeartRate.setFont(new Font("Tahoma", Font.BOLD, 17));
+		
+		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -170,7 +167,6 @@ public class HeartSimulation extends JFrame{
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(label, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(btnStopSimulation, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(btnNormalRate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
 					.addGap(6)
@@ -179,13 +175,17 @@ public class HeartSimulation extends JFrame{
 					.addComponent(btnTachycardiaHeartRate)
 					.addGap(7)
 					.addComponent(btnRunningactivity, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addContainerGap(328, Short.MAX_VALUE)
+					.addComponent(lblPatientsHeartRate)
+					.addGap(303))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(label, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-					.addGap(247)
+					.addGap(195)
+					.addComponent(lblPatientsHeartRate)
+					.addGap(61)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnTachycardiaHeartRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnBradyRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)

@@ -39,6 +39,7 @@ public class DCMSimulation extends JFrame{
 	PacingModes pm = PacingModes.NONE;
 	SensingModes sm = SensingModes.NONE;
 	ResponseModes rm = ResponseModes.NONE;
+	String state = "Permanent State";
 
     /**
 	 * Create the frame.
@@ -131,27 +132,11 @@ public class DCMSimulation extends JFrame{
 		btnHeartRate.setBackground(SystemColor.inactiveCaptionBorder);
 		btnHeartRate.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
-		JRadioButton rdbtnPermanentState = new JRadioButton("Permanent State");
-		rdbtnPermanentState.setSelected(true);
-		rdbtnPermanentState.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		JRadioButton rdbtnTemporaryState = new JRadioButton("Temporary State");
-		rdbtnTemporaryState.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JRadioButton rdbtnPacenowStae = new JRadioButton("Pace-Now State");
-		rdbtnPacenowStae.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JRadioButton rdbtnPoweronresetState = new JRadioButton("Power-On-Reset State");
-		rdbtnPoweronresetState.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		ButtonGroup states = new ButtonGroup();
-		states.add(rdbtnPoweronresetState);
-		states.add(rdbtnTemporaryState);
-		states.add(rdbtnPermanentState);
-		states.add(rdbtnPacenowStae);
 		
 		JLabel lblNewLabel = new JLabel("Operating Modes");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"O - None", "A - Atrium", "V - Ventricle", "D - Dual"}));
@@ -171,6 +156,8 @@ public class DCMSimulation extends JFrame{
 			}
 		});
 		
+		
+	
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"O - None", "A - Atrium", "V - Ventricle", "D - Dual"}));
@@ -203,6 +190,83 @@ public class DCMSimulation extends JFrame{
 		}
 			}
 		});
+		
+		
+		JRadioButton rdbtnPermanentState = new JRadioButton("Permanent State");		
+		rdbtnPermanentState.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(rdbtnPermanentState.isSelected()) { 
+					state = rdbtnPermanentState.getText();
+					comboBox.setEnabled(true);
+					comboBox_1.setEnabled(true);
+					comboBox_2.setEnabled(true);
+					comboBox.setSelectedIndex(0);
+					comboBox_1.setSelectedIndex(0);
+					comboBox_2.setSelectedIndex(0);
+			
+		}		
+			}
+		});
+		rdbtnPermanentState.setSelected(true);
+		rdbtnPermanentState.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		
+		JRadioButton rdbtnTemporaryState = new JRadioButton("Temporary State");
+		rdbtnTemporaryState.addItemListener(new ItemListener() {
+		public void itemStateChanged(ItemEvent e) {
+			if(rdbtnTemporaryState.isSelected()) { 
+				state = (rdbtnTemporaryState.getText());
+				comboBox.setEnabled(true);
+				comboBox_1.setEnabled(true);
+				comboBox_2.setEnabled(true);
+				comboBox.setSelectedIndex(0);
+				comboBox_1.setSelectedIndex(0);
+				comboBox_2.setSelectedIndex(0);
+				
+		}
+			}
+		});
+		rdbtnTemporaryState.setFont(new Font("Tahoma", Font.PLAIN, 14));		
+		
+		
+		JRadioButton rdbtnPacenowStae = new JRadioButton("Pace-Now State");
+		rdbtnPacenowStae.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(rdbtnPacenowStae.isSelected()) { 
+					state = (rdbtnPacenowStae.getText());
+					comboBox.setSelectedIndex(2);
+					comboBox_1.setSelectedIndex(2);
+					comboBox_2.setSelectedIndex(2);
+					comboBox.setEnabled(false);
+					comboBox_1.setEnabled(false);
+					comboBox_2.setEnabled(false);
+					
+				}
+			}
+		});
+		rdbtnPacenowStae.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JRadioButton rdbtnPoweronresetState = new JRadioButton("Power-On-Reset State");
+		rdbtnPoweronresetState.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(rdbtnPoweronresetState.isSelected()) { 
+					state = (rdbtnPoweronresetState.getText());
+					comboBox.setSelectedIndex(2);
+					comboBox_1.setSelectedIndex(2);
+					comboBox_2.setSelectedIndex(2);
+					comboBox.setEnabled(false);
+					comboBox_1.setEnabled(false);
+					comboBox_2.setEnabled(false);
+				}
+			}
+		});
+		rdbtnPoweronresetState.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		ButtonGroup states = new ButtonGroup();
+		states.add(rdbtnPoweronresetState);
+		states.add(rdbtnTemporaryState);
+		states.add(rdbtnPermanentState);
+		states.add(rdbtnPacenowStae);
 		
 		JLabel lblChambersPaced = new JLabel("Chambers Paced");
 		lblChambersPaced.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -392,7 +456,10 @@ public class DCMSimulation extends JFrame{
 		        try {
 					while (true) {
 						if (normalPanel != null) { 
+							
 			    			normalPanel.setModes(pm, sm, rm, sensedDelay.getText());
+							normalPanel.checkStates(state);
+							
 							if(heartRate.ratesList.size() > countPacedBeats + 2) {
 								pacedList.add(heartRate.ratesList.get(countPacedBeats));
 								countPacedBeats++;

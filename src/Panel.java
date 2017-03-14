@@ -29,6 +29,7 @@ public class Panel extends JPanel{
 	PacingModes paceMode;
 	SensingModes senseMode; 
 	ResponseModes respondMode;
+	int iSensedDelay = 1200;
 	
 	
 	public Panel(ArrayList<Point> list) {
@@ -60,10 +61,11 @@ public class Panel extends JPanel{
         graph.fillRect(0,0,width,190);
     }
     
-    public void setModes(PacingModes pm, SensingModes sm, ResponseModes rm) {
+    public void setModes(PacingModes pm, SensingModes sm, ResponseModes rm, String sensedDelay) {
     	paceMode = pm;
     	senseMode = sm;
-    	respondMode = rm;  	
+    	respondMode = rm;  
+    	iSensedDelay = Integer.parseInt(sensedDelay);
     }
     
     public boolean continousDraw(int c, boolean showSensing, boolean showPacing, ArrayList<Point> p) {
@@ -120,7 +122,7 @@ public class Panel extends JPanel{
         		switch(paceMode) {
         		case ATRIUM:
         			if (respondMode == ResponseModes.INHIBITED) {
-            			if (atriumSensed != 0 && System.currentTimeMillis() - atriumSensed > 1200)
+            			if (atriumSensed != 0 && System.currentTimeMillis() - atriumSensed > iSensedDelay)
             			{
             				paceSingleChambers(true, false);
             			}
@@ -128,7 +130,7 @@ public class Panel extends JPanel{
         			break;
         		case VENTRICAL:
         			if (respondMode == ResponseModes.INHIBITED) {
-            			if (ventricalSensed != 0 && System.currentTimeMillis() - ventricalSensed > 1200)
+            			if (ventricalSensed != 0 && System.currentTimeMillis() - ventricalSensed > iSensedDelay)
             			{
             				paceSingleChambers(false, true);
             			}
@@ -136,11 +138,11 @@ public class Panel extends JPanel{
         			break;
         		case DUAL:
         			if (respondMode == ResponseModes.INHIBITED) {
-            			if (atriumSensed != 0 && System.currentTimeMillis() - atriumSensed > 1200)
+            			if (atriumSensed != 0 && System.currentTimeMillis() - atriumSensed > iSensedDelay)
             			{
             				paceAtrial(Color.BLUE, true, false);
             			}
-            			if (ventricalSensed != 0 && System.currentTimeMillis() - ventricalSensed > 1200)
+            			if (ventricalSensed != 0 && System.currentTimeMillis() - ventricalSensed > iSensedDelay)
             			{
             				paceVentrical(Color.BLUE, true, false);
             			}

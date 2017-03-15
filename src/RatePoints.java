@@ -2,7 +2,7 @@
 public class RatePoints {
 	private static int normalRates[] = {10,40,10,90,10,10,10,10};
 	private static int brachycardicRates [] = {10,40,10,90,10,10,10,10,10,10};
-	private static int tachycardicRates[] = {10,40,10,90,10,5};
+	private static int tachycardicRates[] = {10,40,10,90,10,10};
 	private static int runningActivityRates[] = {10,40,10,90,10,10};
 	/**
 	 * @return the normalRates

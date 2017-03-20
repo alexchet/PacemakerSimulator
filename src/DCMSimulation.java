@@ -134,7 +134,7 @@ public class DCMSimulation extends JFrame{
 		
 		
 		
-		JLabel lblNewLabel = new JLabel("Operating Modes");
+		JLabel lblNewLabel = new JLabel("Operating States");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		
@@ -305,7 +305,7 @@ public class DCMSimulation extends JFrame{
 		sensedDelay.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		sensedDelay.setColumns(10);
 		
-		JButton btnLowBattreySim = new JButton("Low Battrey Sim");
+		JButton btnLowBattreySim = new JButton("Low Battery Sim");
 		btnLowBattreySim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				comboBox.setSelectedIndex(2);

@@ -17,8 +17,8 @@ import javax.swing.JLabel;
 
 public class HeartSimulation extends JFrame{
 	JPanel contentPane, initialPanel;
-	Panel normalPanel, bradyPanel, tachyPanel, activityPanel, bradySinusPanel;         
-    boolean normalFlag, bradyFlag, tachyFlag, activityFlag, bradySinusFlag;
+	Panel normalPanel, bradyPanel, tachyPanel, activityPanel, bradySinusPanel, bradySecAVPanel;         
+    boolean normalFlag, bradyFlag, tachyFlag, activityFlag, bradySinusFlag, bradySecAVFlag;
 	int countHeartBeats = 0;
 
     /**
@@ -186,18 +186,18 @@ public class HeartSimulation extends JFrame{
 		btnSecondaryAvBlock.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (!bradyFlag) {
+				if (!bradySecAVFlag) {
 					countHeartBeats = 0;
 					heartRate.reset();
 					heartRate.startHeart(RatePoints.getBradySecAVRates());
-					bradyPanel = new Panel(heartRate.getRatesList());
+					bradySecAVPanel = new Panel(heartRate.getRatesList());
 					
 					resetPanels();
 					resetFlags();
-					bradyPanel.resetGraph();
+					bradySecAVPanel.resetGraph();
 					
-					bradyFlag = true;
-					contentPane.add(bradyPanel);
+					bradySecAVFlag = true;
+					contentPane.add(bradySecAVPanel);
 				}
 			}
 		});
@@ -278,6 +278,10 @@ public class HeartSimulation extends JFrame{
 		
 						if (bradySinusFlag) {
 				                bradySinusPanel.continousDraw(countHeartBeats, false, false, null);
+						}
+		
+						if (bradySecAVFlag) {
+				                bradySecAVPanel.continousDraw(countHeartBeats, false, false, null);
 						}
 						countHeartBeats++;
 			            repaint();

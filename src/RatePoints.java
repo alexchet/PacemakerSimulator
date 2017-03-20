@@ -6,7 +6,7 @@ public class RatePoints {
 	private static int bradyArrestRates [] = {10,10,24,29,24,10,10,-10,90,-20,10,10,34,39,34,10,10,10,10,10,24,29,24,10,10,-10,90,-20,10,10,34,39,34,10,10,10,10,10,24,29,24,10,10,-10,90,-20,10,10,34,39,34,10,10,10,10,10,24,29,24,10,10,-10,90,-20,10,10,34,39,34,10,10,10,10,10,10,10,10,10,10};
 	
 	private static int tachycardicRates[] =  {10,10,24,29,24,10,10,-10,90,-20,10,10,34,39,34,10,10};
-	private static int runningActivityRates[] = {10,40,10,90,10,10};
+	private static int runningActivityRates[] = {10,10,24,29,24,10,10,-10,90,-20,10,10,34,39,34,10,10};
 	/**
 	 * @return the normalRates
 	 */

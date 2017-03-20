@@ -11,6 +11,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+/*
+ * Reference for the Graph: 
+ * http://forums.hardwarezone.com.sg/programmers-den-296/i-dont-really-understand-java-ecg-graph-code-could-someone-help-me-2574017.html
+ * We used the code from this website to build our ECG graph
+ * 
+ * */
 public class Panel extends JPanel{
 	Graphics2D graph;
     BufferedImage bufferedImage;

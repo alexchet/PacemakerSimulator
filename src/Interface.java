@@ -24,6 +24,7 @@ public class Interface extends JFrame{
 
 		new HeartSimulation(tabbedPane, heartRate);
 		new DCMSimulation(tabbedPane, heartRate);
+		//new MemoryWrite(heartRate);
 	}
 }
 	

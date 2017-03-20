@@ -1,6 +1,6 @@
 
 public class RatePoints {
-	private static int normalRates[] = {10,10,24,29,24,10,10,-10,90,-20,10,10,34,39,34,10,10,10,10};
+	private static int normalRates[] = {10,10,20,23,20,10,10,-10,90,-20,10,10,30,34,30,10,10,10,10};
 	private static int bradyRates [] = {10,10,24,29,24,10,10,-10,90,-20,10,10,34,39,34,10,10,10,10,
 			10,10,10,10,10,10,10,10,10,10,10,10};
 	private static int bradySecAVRates [] = {10,10,24,29,24,10,10,-10,90,-20,10,10,34,39,34,10,10,10,10,

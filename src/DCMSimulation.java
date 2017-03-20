@@ -30,6 +30,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class DCMSimulation extends JFrame{
 	JPanel contentPane, initialPanel, secondPanel;
@@ -115,9 +117,7 @@ public class DCMSimulation extends JFrame{
 					heartBeatPanel.setBounds(5,5,820,190);
 					contentPane.add(heartBeatPanel);
 					
-					//test
-					//MemoryWrite.writeFixed(heartRate.getRatesList());
-					MemoryWrite.continuousWrite(heartRate.getRatesList());
+					
 					
 					//Lower panel to show normal heart rate
 					if (normalPanel != null) contentPane.remove(normalPanel);
@@ -288,10 +288,21 @@ public class DCMSimulation extends JFrame{
 		lblRecordingModes.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JRadioButton rdbtnFixed = new JRadioButton("Fixed");
+		rdbtnFixed.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				MemoryWrite.writeFixed(heartRate.getRatesList());
+				//MemoryWrite.continuousWrite(heartRate.getRatesList());
+			}
+		});
 		rdbtnFixed.setSelected(true);
 		rdbtnFixed.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JRadioButton rdbtnContinuous = new JRadioButton("Continuous");
+		rdbtnContinuous.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				MemoryWrite.continuousWrite(heartRate.getRatesList());
+			}
+		});
 		rdbtnContinuous.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		ButtonGroup recording = new ButtonGroup();

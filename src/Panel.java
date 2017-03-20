@@ -20,7 +20,7 @@ import javax.swing.border.Border;
 public class Panel extends JPanel{
 	Graphics2D graph;
     BufferedImage bufferedImage;
-    int spaceBetweenpoints = 20;
+    int spaceBetweenpoints = 10;
 	ArrayList<Point> panelList;
 	int width = 820;
 	int x1 = 5;

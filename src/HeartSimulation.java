@@ -17,8 +17,8 @@ import javax.swing.JLabel;
 
 public class HeartSimulation extends JFrame{
 	JPanel contentPane, initialPanel;
-	Panel normalPanel, bradyPanel, tachyPanel, activityPanel;         
-    boolean normalFlag, bradyFlag, tachyFlag, activityFlag;
+	Panel normalPanel, bradyPanel, tachyPanel, activityPanel, bradySinusPanel;         
+    boolean normalFlag, bradyFlag, tachyFlag, activityFlag, bradySinusFlag;
 	int countHeartBeats = 0;
 
     /**
@@ -85,8 +85,6 @@ public class HeartSimulation extends JFrame{
 					countHeartBeats = 0;
 					heartRate.reset();
 					heartRate.startHeart(RatePoints.getBrachycardicRates());
-					//heartRate.startHeart(RatePoints.getBradySecAVRates());
-					//heartRate.startHeart(RatePoints.getBradyArrestRates());
 					bradyPanel = new Panel(heartRate.getRatesList());
 					
 					resetPanels();
@@ -166,25 +164,23 @@ public class HeartSimulation extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				
-				if (!bradyFlag) {
+				if (!bradySinusFlag) {
 					countHeartBeats = 0;
 					heartRate.reset();
 					heartRate.startHeart(RatePoints.getBradyArrestRates());
-					bradyPanel = new Panel(heartRate.getRatesList());
+					bradySinusPanel = new Panel(heartRate.getRatesList());
 					
 					resetPanels();
 					resetFlags();
-					bradyPanel.resetGraph();
+					bradySinusPanel.resetGraph();
 					
-					bradyFlag = true;
-					contentPane.add(bradyPanel);
+					bradySinusFlag = true;
+					contentPane.add(bradySinusPanel);
 				}
 			}
 		});
 		btnBradycardiaSinusArrest.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnBradycardiaSinusArrest.setBackground(SystemColor.inactiveCaptionBorder);
-		
-		
 		
 		JButton btnSecondaryAvBlock = new JButton("Secondary AV Block");
 		btnSecondaryAvBlock.addMouseListener(new MouseAdapter() {
@@ -278,6 +274,10 @@ public class HeartSimulation extends JFrame{
 		
 						if (activityFlag) {
 				                activityPanel.continousDraw(countHeartBeats, false, false, null);
+						}
+		
+						if (bradySinusFlag) {
+				                bradySinusPanel.continousDraw(countHeartBeats, false, false, null);
 						}
 						countHeartBeats++;
 			            repaint();

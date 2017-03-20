@@ -298,11 +298,15 @@ public class HeartSimulation extends JFrame{
 		if (tachyPanel != null) contentPane.remove(tachyPanel);
 		if (activityPanel != null) contentPane.remove(activityPanel);
 		if (initialPanel != null) contentPane.remove(initialPanel);
+		if (bradySinusPanel != null) contentPane.remove(bradySinusPanel);
+		if (bradySecAVPanel != null) contentPane.remove(bradySecAVPanel);
     }
     
     public void resetFlags() {
     	normalFlag = false;
 		bradyFlag = false;
+		bradySinusFlag = false;
+		bradySecAVFlag = false;
 		tachyFlag = false;
 		activityFlag = false;
     }

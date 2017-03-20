@@ -115,6 +115,10 @@ public class DCMSimulation extends JFrame{
 					heartBeatPanel.setBounds(5,5,820,190);
 					contentPane.add(heartBeatPanel);
 					
+					//test
+					//MemoryWrite.writeFixed(heartRate.getRatesList());
+					MemoryWrite.continuousWrite(heartRate.getRatesList());
+					
 					//Lower panel to show normal heart rate
 					if (normalPanel != null) contentPane.remove(normalPanel);
 					normalHeartRate.reset();

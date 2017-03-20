@@ -85,6 +85,8 @@ public class HeartSimulation extends JFrame{
 					countHeartBeats = 0;
 					heartRate.reset();
 					heartRate.startHeart(RatePoints.getBrachycardicRates());
+					//heartRate.startHeart(RatePoints.getBradySecAVRates());
+					//heartRate.startHeart(RatePoints.getBradyArrestRates());
 					bradyPanel = new Panel(heartRate.getRatesList());
 					
 					resetPanels();
@@ -159,26 +161,77 @@ public class HeartSimulation extends JFrame{
 		lblPatientsHeartRate.setBackground(Color.WHITE);
 		lblPatientsHeartRate.setFont(new Font("Tahoma", Font.BOLD, 17));
 		
+		JButton btnBradycardiaSinusArrest = new JButton("Bradycardia Sinus Arrest");
+		btnBradycardiaSinusArrest.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				if (!bradyFlag) {
+					countHeartBeats = 0;
+					heartRate.reset();
+					heartRate.startHeart(RatePoints.getBradyArrestRates());
+					bradyPanel = new Panel(heartRate.getRatesList());
+					
+					resetPanels();
+					resetFlags();
+					bradyPanel.resetGraph();
+					
+					bradyFlag = true;
+					contentPane.add(bradyPanel);
+				}
+			}
+		});
+		btnBradycardiaSinusArrest.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnBradycardiaSinusArrest.setBackground(SystemColor.inactiveCaptionBorder);
+		
+		
+		
+		JButton btnSecondaryAvBlock = new JButton("Secondary AV Block");
+		btnSecondaryAvBlock.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (!bradyFlag) {
+					countHeartBeats = 0;
+					heartRate.reset();
+					heartRate.startHeart(RatePoints.getBradySecAVRates());
+					bradyPanel = new Panel(heartRate.getRatesList());
+					
+					resetPanels();
+					resetFlags();
+					bradyPanel.resetGraph();
+					
+					bradyFlag = true;
+					contentPane.add(bradyPanel);
+				}
+			}
+		});
+		btnSecondaryAvBlock.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnSecondaryAvBlock.setBackground(SystemColor.inactiveCaptionBorder);
+		
 		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnNormalRate, GroupLayout.PREFERRED_SIZE, 214, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblPatientsHeartRate))
+					.addGap(576))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(btnStopSimulation, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(btnNormalRate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
-					.addGap(6)
-					.addComponent(btnBradyRate, GroupLayout.PREFERRED_SIZE, 214, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(btnRunningactivity, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+						.addComponent(btnTachycardiaHeartRate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+						.addComponent(btnBradyRate, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 214, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnTachycardiaHeartRate)
-					.addGap(7)
-					.addComponent(btnRunningactivity, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap(328, Short.MAX_VALUE)
-					.addComponent(lblPatientsHeartRate)
-					.addGap(303))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(btnStopSimulation, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnBradycardiaSinusArrest, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnSecondaryAvBlock, GroupLayout.PREFERRED_SIZE, 241, GroupLayout.PREFERRED_SIZE)
+					.addGap(80))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -186,14 +239,20 @@ public class HeartSimulation extends JFrame{
 					.addGap(195)
 					.addComponent(lblPatientsHeartRate)
 					.addGap(61)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnTachycardiaHeartRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnBradyRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNormalRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnRunningactivity, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
+					.addComponent(btnNormalRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnStopSimulation, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(248, Short.MAX_VALUE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnBradyRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnBradycardiaSinusArrest, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnSecondaryAvBlock, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnTachycardiaHeartRate, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnRunningactivity, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnStopSimulation, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(146, Short.MAX_VALUE))
 		);
 
 		contentPane.setLayout(gl_contentPane);
@@ -221,7 +280,7 @@ public class HeartSimulation extends JFrame{
 						}
 						countHeartBeats++;
 			            repaint();
-			            Thread.sleep(200);
+			            Thread.sleep(100);
 					}
 		        } catch (InterruptedException e) {}
 		     }

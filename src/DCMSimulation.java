@@ -170,8 +170,10 @@ public class DCMSimulation extends JFrame{
 		if(comboBox_1.getSelectedIndex()==0) {
 			sm = sm.NONE;
 		}else if(comboBox_1.getSelectedIndex()==1) {
+			sensedDelay.setText("2000");
 			sm= sm.ATRIUM;
 		}else if(comboBox_1.getSelectedIndex()==2) {
+			sensedDelay.setText("1350");
 			sm = sm.VENTRICAL;
 		}else if(comboBox_1.getSelectedIndex()==3) {
 			sm = sm.DUAL;
@@ -316,7 +318,7 @@ public class DCMSimulation extends JFrame{
 		lblSensedDelay.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		sensedDelay = new JTextField();
-		sensedDelay.setText("1200");
+		sensedDelay.setText("2000");
 		sensedDelay.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		sensedDelay.setColumns(10);
 		
@@ -453,7 +455,7 @@ public class DCMSimulation extends JFrame{
 							heartBeatPanel.continousDraw(countHeartBeats, false, false, null);
 						}
 						countHeartBeats++;
-						Thread.sleep(200);
+						Thread.sleep(100);
 					}
 		        } catch (InterruptedException e) {}
 		     }
@@ -477,17 +479,11 @@ public class DCMSimulation extends JFrame{
 								pacedList.add(heartRate.ratesList.get(countPacedBeats));
 								countPacedBeats++;
 							}
-							boolean skipPoint = normalPanel.continousDraw(countHeartBeats, true, true, pacedList);
+							normalPanel.continousDraw(countHeartBeats, true, true, pacedList);
 					
-							if (skipPoint) {
-								countPacedBeats = countPacedBeats - 2;
-								countHeartBeats--;
-								pacedList.remove(pacedList.size()-1);
-								pacedList.remove(pacedList.size()-1);
-							}
 							countHeartBeats++;
 						}
-						Thread.sleep(200);
+						Thread.sleep(100);
 					}
 		        } catch (InterruptedException e) {}
 		     }

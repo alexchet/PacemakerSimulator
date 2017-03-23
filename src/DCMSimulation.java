@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,21 +16,14 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.SwingConstants;
-import java.awt.Component;
-import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 
 public class DCMSimulation extends JFrame{
 	JPanel contentPane, initialPanel, secondPanel;

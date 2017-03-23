@@ -98,9 +98,11 @@ public class Panel extends JPanel{
     	
     }
     
-    public void continousDraw(int c, boolean showSensing, boolean showPacing, ArrayList<Point> p) {
+    public ArrayList<Point> continousDraw(int c, boolean showSensing, boolean showPacing, ArrayList<Point> p) {
         //Checks if i passed two points before doing anything, it draws the image
         //the image in this case is the rectangle
+    	ArrayList<Point> points = new ArrayList<Point>();
+    	
         skipPoint = false;
     	if (p != null) panelList = p;
         if(panelList.size() > c + 1) {
@@ -150,7 +152,8 @@ public class Panel extends JPanel{
             			if (atriumSensed != 0 && System.currentTimeMillis() - atriumSensed > iSensedDelay)
             			{
             				if (atriumPaced + 1 < RatePoints.getAtrialRates().length) {
-            					paceAtrial();
+            					points = paceAtrial();
+            					skipPoint = true;
             				} else {
             					atriumSensed = System.currentTimeMillis();
             					atriumPaced = 0;
@@ -163,7 +166,8 @@ public class Panel extends JPanel{
             			if (ventricalSensed != 0 && System.currentTimeMillis() - ventricalSensed > iSensedDelay)
             			{
             				if (ventricalPaced + 1 < RatePoints.getVentricalRates().length) {
-            					paceVentrical();
+            					points = paceVentrical();
+            					skipPoint = true;
             				} else {
             					ventricalSensed = System.currentTimeMillis();
             					ventricalPaced = 0;
@@ -177,7 +181,8 @@ public class Panel extends JPanel{
         						ventricalSensed != 0 && System.currentTimeMillis() - ventricalSensed > iSensedDelay)
             			{
             				if (atriumPaced + 1 < RatePoints.getAtrialRates().length) {
-            					paceAtrial();
+            					points = paceAtrial();
+            					skipPoint = true;
             				} else {
             					atriumSensed = System.currentTimeMillis();
             					atriumPaced = 0;
@@ -191,10 +196,15 @@ public class Panel extends JPanel{
         	}
             }
             if (!skipPoint) {
+            	points.add(point1);
+            	points.add(point2);
+            	
 	            graph.setColor(Color.BLACK);
 	            graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
             }
         }
+        
+        return points;
     }
     
     public void senseVentrical()
@@ -211,38 +221,50 @@ public class Panel extends JPanel{
         atriumSensed = System.currentTimeMillis();
     }
     
-    public void paceAtrial() {
+    public ArrayList<Point> paceAtrial() {
+    	ArrayList<Point> points = new ArrayList<Point>();
+    	
     	graph.setColor(Color.BLUE);
         //graph.drawLine(getWidth()-15,getHeight()+1,getWidth()-15,0);
         int[] rates = RatePoints.getAtrialRates();
         
         int p = rates[atriumPaced];
-        Point point = new Point(0,50-p);
+        Point point1 = new Point(0,50-p);
+        points.add(point1);
 
         int p2 = rates[atriumPaced + 1];
         Point point2 = new Point(0,50-p2);
+        points.add(point2);
         
         atriumPaced++;
         
-        graph.drawLine(getWidth()-spaceBetweenpoints-1,point.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
+        graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
         skipPoint = true;
+        
+        return points;
     }
     
-    public void paceVentrical() {
+    public ArrayList<Point> paceVentrical() {
+    	ArrayList<Point> points = new ArrayList<Point>();
+    	
     	graph.setColor(Color.BLUE);
         //graph.drawLine(getWidth()-15,getHeight()+1,getWidth()-15,0);
         int[] rates = RatePoints.getVentricalRates();
         
         int p = rates[ventricalPaced];
-        Point point = new Point(0,50-p);
+        Point point1 = new Point(0,50-p);
+        points.add(point1);
 
         int p2 = rates[ventricalPaced + 1];
         Point point2 = new Point(0,50-p2);
+        points.add(point2);
         
         ventricalPaced++;
         
-        graph.drawLine(getWidth()-spaceBetweenpoints-1,point.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
+        graph.drawLine(getWidth()-spaceBetweenpoints-1,point1.y+getHeight()/2,getWidth()-1,point2.y+getHeight()/2);
         skipPoint = true;
+        
+        return points;
     }
 
     public void paint(Graphics g) {

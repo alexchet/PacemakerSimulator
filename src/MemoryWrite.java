@@ -13,15 +13,14 @@ public class MemoryWrite {
 		
 	}
 	
-	public static void continuousWrite(ArrayList<Point> ratesList){
+	public static void continuousWrite(ArrayList<Point> ratesList, boolean clear){
 		String fileName = "continuousStoreage.csv";		
 		boolean checkIfExists = new File(fileName).exists();
 		try {
-			FileWriter csvWrite = new FileWriter(fileName,false);
-			
-								
-				if(ratesList!=null){
-				for(int i=0; i<1000; i++){
+			FileWriter csvWrite = new FileWriter(fileName, true);
+							
+			if(ratesList!=null){
+				for(int i=0; i<ratesList.size(); i++) {
 					String f = ratesList.get(i).getY()+"";
 					csvWrite.write(f);
 					csvWrite.append(',');
@@ -44,37 +43,41 @@ public class MemoryWrite {
 		}		
 		
 	}
-	public static void writeFixed(ArrayList<Point> ratesList){
+	public static void writeFixed(ArrayList<Point> ratesList, boolean clear){
 		String fileName = "fixedStoreage.csv";		
-		boolean checkIfExists = new File(fileName).exists();
+		File file = new File(fileName);
+		
 		try {
-			FileWriter csvWrite = new FileWriter(fileName,true);
-			
-			if(!checkIfExists){
-				Date d = new Date();
+			Date d = new Date();
+			if (clear) {
+				FileWriter csvWrite = new FileWriter(fileName, false);
 				SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy h:mm:ss a");
 				String formattedDate = dataFormat.format(d);
 				csvWrite.write(formattedDate);
-				csvWrite.append('\n');
-				System.out.println(formattedDate);
-				if(ratesList!=null){
-				for(int i=0; i<1000; i++){
-					String f = ratesList.get(i).getY()+"";
-					csvWrite.write(f);
-					csvWrite.append(',');
-	        	
-				}
+				csvWrite.append(',');				
+				csvWrite.flush();				
+				csvWrite.close();
 			}
-		}					
-			csvWrite.flush();
-			csvWrite.close();
+
+			if (file.length() < 2048) {
+				if(ratesList!=null){
+					FileWriter csvWrite = new FileWriter(fileName, true);
+					for(int i=0; i<ratesList.size(); i++){
+						String f = ratesList.get(i).getY()+"";
+						csvWrite.append(f);
+						csvWrite.append(',');
+		        	
+					}				
+					csvWrite.flush();
+					csvWrite.close();
+				}	
+			}
 			
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		
+		}
 	}
 	
 }

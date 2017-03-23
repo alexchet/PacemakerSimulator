@@ -42,6 +42,7 @@ public class DCMSimulation extends JFrame{
 	SensingModes sm = SensingModes.NONE;
 	ResponseModes rm = ResponseModes.NONE;
 	String state = "Permanent State";
+	boolean fixedMemory = true;
 
     /**
 	 * Create the frame.
@@ -292,8 +293,7 @@ public class DCMSimulation extends JFrame{
 		JRadioButton rdbtnFixed = new JRadioButton("Fixed");
 		rdbtnFixed.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				MemoryWrite.writeFixed(heartRate.getRatesList());
-				//MemoryWrite.continuousWrite(heartRate.getRatesList());
+				fixedMemory = true;
 			}
 		});
 		rdbtnFixed.setSelected(true);
@@ -302,7 +302,7 @@ public class DCMSimulation extends JFrame{
 		JRadioButton rdbtnContinuous = new JRadioButton("Continuous");
 		rdbtnContinuous.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				MemoryWrite.continuousWrite(heartRate.getRatesList());
+				fixedMemory = false;
 			}
 		});
 		rdbtnContinuous.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -466,6 +466,7 @@ public class DCMSimulation extends JFrame{
 	    		int countHeartBeats = 0;
 	    		int countPacedBeats = 0;
 	    		if (normalPanel != null) {}
+	    		boolean clearFile = true;
 		        try {
 					while (true) {
 						if (normalPanel != null) { 
@@ -479,8 +480,15 @@ public class DCMSimulation extends JFrame{
 								pacedList.add(heartRate.ratesList.get(countPacedBeats));
 								countPacedBeats++;
 							}
-							normalPanel.continousDraw(countHeartBeats, true, true, pacedList);
-					
+							ArrayList<Point> points = normalPanel.continousDraw(countHeartBeats, true, true, pacedList);
+							
+							if (fixedMemory) {
+								MemoryWrite.writeFixed(points, clearFile);
+							} else {
+								MemoryWrite.continuousWrite(points, clearFile);
+							}
+							
+							clearFile = false;
 							countHeartBeats++;
 						}
 						Thread.sleep(100);

@@ -291,7 +291,7 @@ public class DCMSimulation extends JFrame{
 		rdbtnFixed.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				MemoryWrite.writeFixed(heartRate.getRatesList());
-				//MemoryWrite.continuousWrite(heartRate.getRatesList());
+				
 			}
 		});
 		rdbtnFixed.setSelected(true);

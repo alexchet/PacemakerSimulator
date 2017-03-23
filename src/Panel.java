@@ -17,6 +17,11 @@ import javax.swing.border.Border;
  * We used the code from this website to build our ECG graph
  * 
  * */
+
+/**
+ * This class uses the Graphics2D class to draw an ECG graph
+ *
+ */
 public class Panel extends JPanel{
 	Graphics2D graph;
     BufferedImage bufferedImage;
@@ -40,7 +45,11 @@ public class Panel extends JPanel{
 	boolean correctStateMode=false;
 	
 	
-	
+	/**
+	 * In the constructor we are passing the arraylist and store them in the
+	 * panelList. Then we are drawing a white rectangle on the screen.
+	 * @param list
+	 */
 	public Panel(ArrayList<Point> list) {
 		panelList = list;
 		setBounds(x1,y1,width,190);
@@ -60,16 +69,31 @@ public class Panel extends JPanel{
         graph.fillRect(0,0,width,190);       
 	}
 	
+	/**
+	 * This method deletes the passed point from the rectangle
+	 * @param x
+	 * @param width
+	 */
 	public void deletePoints(int x,int width) {
         graph.setColor(Color.white);
         graph.fillRect(x,0,width,getHeight());
     }
     
+	/**
+	 * Thsi method just re-draws a white rectangle.
+	 */
     public void resetGraph(){
         graph.setColor(Color.white);
         graph.fillRect(0,0,width,190);
     }
     
+    /**
+     * Method which sets the chosen mode.
+     * @param pm
+     * @param sm
+     * @param rm
+     * @param sensedDelay
+     */
     public void setModes(PacingModes pm, SensingModes sm, ResponseModes rm, String sensedDelay) {
     	paceMode = pm;
     	senseMode = sm;
@@ -77,6 +101,12 @@ public class Panel extends JPanel{
     	iSensedDelay = Integer.parseInt(sensedDelay);
     }
        
+    /**
+     * Method that checks that the chosen operating mode
+     * is a valid for the chosen State. Before allowing the pacemaker
+     * to pace the Heart.
+     * @param state
+     */
     public void checkStates(String state){
     	
     	String mode = paceMode.getMode()+""+senseMode.getMode()+""+respondMode.getMode();
@@ -99,8 +129,8 @@ public class Panel extends JPanel{
     }
     
     public boolean continousDraw(int c, boolean showSensing, boolean showPacing, ArrayList<Point> p) {
-        //Checks if i passed two points before doing anything, it draws the image
-        //the image in this case is the rectangle
+        //Checks if i passed two points before doing anything. This method draws the ECG graph inside the white
+    	//rectangle for the chosen Heart rate
         skipPoint = false;
     	if (p != null) panelList = p;
         if(panelList.size() > c + 1) {
@@ -270,6 +300,9 @@ public class Panel extends JPanel{
 		}	
     }
 
+    /**
+     * Method to just draw
+     */
     public void paint(Graphics g) {
         g.drawImage(bufferedImage,0,0,null);
     }

@@ -8,13 +8,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class MemoryWrite {	
-	//static ArrayList<Point> ratesList =null;
 	public MemoryWrite(HeartRate heartRate) {		
 		
 	}
 	
 	public static void continuousWrite(ArrayList<Point> ratesList){
-		String fileName = "continuousStoreage.csv";		
+		String fileName = "continuousStorage.csv";		
 		boolean checkIfExists = new File(fileName).exists();
 		try {
 			FileWriter csvWrite = new FileWriter(fileName,false);
@@ -45,7 +44,7 @@ public class MemoryWrite {
 		
 	}
 	public static void writeFixed(ArrayList<Point> ratesList){
-		String fileName = "fixedStoreage.csv";		
+		String fileName = "fixedStorage.csv";		
 		boolean checkIfExists = new File(fileName).exists();
 		try {
 			FileWriter csvWrite = new FileWriter(fileName,true);

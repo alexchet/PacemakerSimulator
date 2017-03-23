@@ -1,4 +1,5 @@
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
@@ -15,23 +16,39 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 
+/*
+ * This class simulates different Heart Rates. Such as Normal Heart Rate, Bradycardia Heart Rate,
+ * Bradycardia Sinus Arrest,Rate-Adaptive Heart Rate and Tachycardia. It also gives the option to stop the simulation.
+ */
+
 public class HeartSimulation extends JFrame{
 	JPanel contentPane, initialPanel;
-	Panel normalPanel, bradyPanel, tachyPanel, activityPanel, bradySinusPanel, bradySecAVPanel;         
+	/**
+	 * Panels for each Heart Rate we are simulating. 
+	 */
+	Panel normalPanel, bradyPanel, tachyPanel, activityPanel, bradySinusPanel, bradySecAVPanel;  
+	/**
+	 * Flags to control which Heart Rate is going to be simulated.
+	 */
     boolean normalFlag, bradyFlag, tachyFlag, activityFlag, bradySinusFlag, bradySecAVFlag;
 	int countHeartBeats = 0;
 
-    /**
-	 * Create the frame.
-	 */
-
+	
+/*
+ * The HeartSimulation Constructor. Here we have the content panel which is the main panel and on top of it we
+ * build the interface. Initially we only have the initial panell and all the buttons 
+ * to change between heart rates.
+ */
 	public HeartSimulation(JTabbedPane tabbedPane, HeartRate heartRate) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 850, 643);
 
 		contentPane = new JPanel();
 		contentPane.setBounds(100, 100, 751, 620);
-		
+		/*
+		 * The initial panel is just a white rectangle that indicates where the graph for the chosen Heart Rate simulation 
+		 * is going to be drawn on. 
+		 */
 		initialPanel = new JPanel();
 		initialPanel.setBounds(5,5,820,190);	
 		initialPanel.setBackground(Color.white);
@@ -51,6 +68,14 @@ public class HeartSimulation extends JFrame{
 		
 		tabbedPane.addTab("Heart Simulator", contentPane);
 		
+		/**
+		 * This Button has an event listener, which listens on click events.
+		 * When the button is clicked the startHeart method in the HeartRate class,
+		 * it is called.
+		 * It sets the flags to indicate which heart rate is going to be simulated.
+		 * It also creates a new Panel that replaces the existing panels on the ContentPanel.
+		 * The graph for the Normal Heart Rate is drawn on this new panel.
+		 */
 		JButton btnNormalRate = new JButton("Normal Heart Rate");
 		btnNormalRate.addMouseListener(new MouseAdapter() {
 			@Override
@@ -73,6 +98,15 @@ public class HeartSimulation extends JFrame{
 		btnNormalRate.setBackground(SystemColor.inactiveCaptionBorder);
 		btnNormalRate.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
+
+		/**
+		 * This Button has an event listener, which listens on click events.
+		 * When the button is clicked the startHeart method in the HeartRate class,
+		 * it is called.
+		 * It sets the flags to indicate which heart rate is going to be simulated.
+		 * It also creates a new Panel that replaces the existing panels on the ContentPanel.
+		 * The graph for the Bradycardia Heart Rate is drawn on this panel.
+		 */
 		JButton btnBradyRate = new JButton("Bradycardia Heart Rate");
 		btnBradyRate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -99,6 +133,14 @@ public class HeartSimulation extends JFrame{
 		btnBradyRate.setBackground(SystemColor.inactiveCaptionBorder);
 		btnBradyRate.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
+		/**
+		 * This Button has an event listener, which listens on click events.
+		 * When the button is clicked the startHeart method in the HeartRate class,
+		 * it is called.
+		 * It sets the flags to indicate which heart rate is going to be simulated.
+		 * It also creates a new Panel that replaces the existing panels on the ContentPanel.
+		 * The graph for the Adaptive-Heart Rate is drawn on this panel.
+		 */
 		JButton btnRunningactivity = new JButton("Running Activity");
 		btnRunningactivity.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {				
@@ -120,6 +162,14 @@ public class HeartSimulation extends JFrame{
 		btnRunningactivity.setBackground(SystemColor.inactiveCaptionBorder);
 		btnRunningactivity.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
+		/**
+		 * This Button has an event listener, which listens on click events.
+		 * When the button is clicked the startHeart method in the HeartRate class,
+		 * it is called.
+		 * It sets the flags to indicate which heart rate is going to be simulated.
+		 * It also creates a new Panel that replaces the existing panels on the ContentPanel.
+		 * The graph for the Tachycardia Heart Rate is drawn on this panel.
+		 */
 		JButton btnTachycardiaHeartRate = new JButton("Tachycardia Heart Rate");
 		btnTachycardiaHeartRate.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {					
@@ -159,6 +209,14 @@ public class HeartSimulation extends JFrame{
 		lblPatientsHeartRate.setBackground(Color.WHITE);
 		lblPatientsHeartRate.setFont(new Font("Tahoma", Font.BOLD, 17));
 		
+		/**
+		 * This Button has an event listener, which listens on click events.
+		 * When the button is clicked the startHeart method in the HeartRate class,
+		 * it is called.
+		 * It sets the flags to indicate which heart rate is going to be simulated.
+		 * It also creates a new Panel that replaces the existing panels on the ContentPanel.
+		 * The graph for the Bradycardia Sinus Arrest Heart Rate is drawn on this panel.
+		 */
 		JButton btnBradycardiaSinusArrest = new JButton("Bradycardia Sinus Arrest");
 		btnBradycardiaSinusArrest.addMouseListener(new MouseAdapter() {
 			@Override
@@ -182,6 +240,14 @@ public class HeartSimulation extends JFrame{
 		btnBradycardiaSinusArrest.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnBradycardiaSinusArrest.setBackground(SystemColor.inactiveCaptionBorder);
 		
+		/**
+		 * This Button has an event listener, which listens on click events.
+		 * When the button is clicked the startHeart method in the HeartRate class,
+		 * it is called.
+		 * It sets the flags to indicate which heart rate is going to be simulated.
+		 * It also creates a new Panel that replaces the existing panels on the ContentPanel.
+		 * The graph for the Secondary AV Block Heart Rate is drawn on this panel.
+		 */
 		JButton btnSecondaryAvBlock = new JButton("Secondary AV Block");
 		btnSecondaryAvBlock.addMouseListener(new MouseAdapter() {
 			@Override
@@ -256,6 +322,11 @@ public class HeartSimulation extends JFrame{
 		getContentPane().add(tabbedPane);
 		setVisible(true);
 
+		/**
+		 * We start a new Java Thread. Here we check which Flag is set to true based
+		 * on the button which was clicked and we call the continuousDraw method in the Panel
+		 * class, to draw the selected Heart Rate on the selected Panel.
+		 */
 		new Thread(new Runnable() {
 		     public void run() {
 		        try {
@@ -292,6 +363,10 @@ public class HeartSimulation extends JFrame{
 		}).start();
 	}
     
+	/**
+	 * Method which check if the panel is on the contentPanel and
+	 * if it is then it removes it.
+	 */
     public void resetPanels() {
 		if (bradyPanel != null) contentPane.remove(bradyPanel);
 		if (normalPanel != null) contentPane.remove(normalPanel);
@@ -301,7 +376,9 @@ public class HeartSimulation extends JFrame{
 		if (bradySinusPanel != null) contentPane.remove(bradySinusPanel);
 		if (bradySecAVPanel != null) contentPane.remove(bradySecAVPanel);
     }
-    
+    /**
+	 * Method which sets all the flags to false when a button is clicked
+	 */
     public void resetFlags() {
     	normalFlag = false;
 		bradyFlag = false;

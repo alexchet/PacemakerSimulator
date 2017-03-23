@@ -6,10 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
-
 public class MemoryWrite {	
-	final static long memorySize = 10240;
+	final static long memorySize = 1024;
 	
 	public MemoryWrite(HeartRate heartRate) {		
 		

@@ -128,18 +128,11 @@ public class Panel extends JPanel{
     	
     }
     
-<<<<<<< HEAD
-    public void continousDraw(int c, boolean showSensing, boolean showPacing, ArrayList<Point> p) {
-        //Checks if i passed two points before doing anything. This method draws the ECG graph inside the white
-    	//rectangle for the chosen Heart rate
 
-=======
     public ArrayList<Point> continousDraw(int c, boolean showSensing, boolean showPacing, ArrayList<Point> p) {
         //Checks if i passed two points before doing anything, it draws the image
         //the image in this case is the rectangle
     	ArrayList<Point> points = new ArrayList<Point>();
-    	
->>>>>>> bug/fixes
         skipPoint = false;
     	if (p != null) panelList = p;
         if(panelList.size() > c + 1) {

@@ -293,12 +293,7 @@ public class DCMSimulation extends JFrame{
 		JRadioButton rdbtnFixed = new JRadioButton("Fixed");
 		rdbtnFixed.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-<<<<<<< HEAD
-				MemoryWrite.writeFixed(heartRate.getRatesList());
-				
-=======
 				fixedMemory = true;
->>>>>>> bug/fixes
 			}
 		});
 		rdbtnFixed.setSelected(true);

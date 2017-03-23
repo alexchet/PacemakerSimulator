@@ -128,7 +128,26 @@ public class Panel extends JPanel{
     	
     }
     
-
+    /**
+     * The method continuosDraw accepts the the current count of the points, 2 booleans to set if sensing
+     * or pacing is displayed and the points to be drawn on the graph. The last draw points
+     * deleted and the next points to be drawn are selected from the main array list of points.
+     * The first switch checks which enum is selected for the sensing mode. An if statement
+     * in every case of the switch checks the current drawn point to detect which part of the grpah is 
+     * being draw. With this information the applications, will sense that the atrium is being drawn, so
+     * it will call the senseAtrial method. Same goes for the ventrical sensing or dual sensing.
+     * A similar switch takes care of the pacing but instead of sensing the current drawn point, a boolean 
+     * is set to skip the current drawn point and the next pacing points are drawn instead. This is
+     * only done if the required criteria are met, such as sensing delay or correct operating
+     * mode selected. The method then returns the list of current drawn points to be saved by the
+     * recording mode selected.
+     * 
+     * @param c Point number
+     * @param showSensing boolean to set if sensing is displayed
+     * @param showPacing boolean to set if pacing is displayed
+     * @param p Array points to draw the graph
+     * @return ArrayPoint for writing to memory
+     */
     public ArrayList<Point> continousDraw(int c, boolean showSensing, boolean showPacing, ArrayList<Point> p) {
         //Checks if i passed two points before doing anything, it draws the image
         //the image in this case is the rectangle

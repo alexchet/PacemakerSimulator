@@ -2,38 +2,43 @@ import java.awt.Point;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
+
 public class MemoryWrite {	
+	final static long memorySize = 10240;
+	
 	public MemoryWrite(HeartRate heartRate) {		
 		
 	}
 	
 	public static void continuousWrite(ArrayList<Point> ratesList, boolean clear){
-		String fileName = "continuousStoreage.csv";
-		boolean checkIfExists = new File(fileName).exists();
+		String fileName = "continuousStorage.csv";
+		File file = new File(fileName);
 		try {
-			FileWriter csvWrite = new FileWriter(fileName, true);
-							
+			Date d = new Date();
+			boolean overwirte = false;
+			if (file.length() < memorySize) {
+				overwirte = true;
+			}
+			
 			if(ratesList!=null){
-				for(int i=0; i<ratesList.size(); i++) {
+				FileWriter csvWrite = new FileWriter(fileName, overwirte);
+				for(int i=0; i<ratesList.size(); i++){
 					String f = ratesList.get(i).getY()+"";
-					csvWrite.write(f);
+					csvWrite.append(f);
 					csvWrite.append(',');
-	        	
 				}
-				csvWrite.append('\n');
-				Date d = new Date();
 				SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy h:mm:ss a");
 				String formattedDate = dataFormat.format(d);
-				csvWrite.write(formattedDate);
+				csvWrite.append(formattedDate);	
+				csvWrite.append(',');			
+				csvWrite.flush();
+				csvWrite.close();
 			}
-						
-			csvWrite.flush();
-			csvWrite.close();
 			
 			
 		} catch (IOException e) {
@@ -44,7 +49,7 @@ public class MemoryWrite {
 	}
 
 	public static void writeFixed(ArrayList<Point> ratesList, boolean clear){
-		String fileName = "fixedStoreage.csv";		
+		String fileName = "fixedStorage.csv";		
 		File file = new File(fileName);
 		try {
 			Date d = new Date();
@@ -58,7 +63,7 @@ public class MemoryWrite {
 				csvWrite.close();
 			}
 
-			if (file.length() < 2048) {
+			if (file.length() < memorySize) {
 				if(ratesList!=null){
 					FileWriter csvWrite = new FileWriter(fileName, true);
 					for(int i=0; i<ratesList.size(); i++){

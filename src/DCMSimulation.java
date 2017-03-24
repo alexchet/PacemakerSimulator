@@ -340,6 +340,10 @@ public class DCMSimulation extends JFrame{
 		JLabel lblSensedDelay = new JLabel("Sensed Delay");
 		lblSensedDelay.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
+		/**
+		 * The sensed delay text box sets the delay in milliseconds before a pacing event
+		 * happens after a sensing event took place.
+		 */
 		sensedDelay = new JTextField();
 		sensedDelay.setText("2000");
 		sensedDelay.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -468,7 +472,14 @@ public class DCMSimulation extends JFrame{
 							.addComponent(btnLowBattreySim, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 							.addGap(184))))
 		);
-
+		
+		/**
+		 * The following thread will take care of the drawing and calling the continuous draw
+		 * method. The first method just draws the selected heart rate of the patient, while the 
+		 * second thread draws the drawn points of the first thread, whilst applying the
+		 * necessary sensing and pacing points. The return statement in the second part, will
+		 * get the points to be written in the memory.
+		 */
 		new Thread(new Runnable() {
 		     public void run() {
 	    		int countHeartBeats = 0;

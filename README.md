@@ -13,4 +13,6 @@ This tab lets the user visualize the previously selected heart rate, while compa
 1. Patient's Heart rate - This is a graph that shows the original heart rate of the patient
 2. Paced Heart Rate - This is a graph that shows the paced heart rate
 
-The DCM simulation is started by clicking the button *Heart Rate*
+The DCM simulation is started by clicking the button *Heart Rate*. Different modes can be selected based on the operating states selected. This gives availability of modes while restricted others.
+
+*NOTE: * Some of the operating modes will not work for certain heart beats and it will result in a broken paced heart rate graph. This also apply to changing the sensed delay while operating the DCM Simulator.
